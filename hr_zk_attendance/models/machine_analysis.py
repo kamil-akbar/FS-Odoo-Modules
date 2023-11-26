@@ -45,7 +45,7 @@ class ZkMachine(models.Model):
                                    ('3', 'Break In'),
                                    ('4', 'Overtime In'),
                                    ('5', 'Overtime Out'),
-                                   ('255', 'None')],
+                                   ('255', 'Auto')],
                                   string='Punching Type')
 
     attendance_type = fields.Selection([('1', 'Finger'),

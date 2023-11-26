@@ -126,8 +126,8 @@ class ZkMachine(models.Model):
             zk_port = info.port_no
             timeout = 15
             try:
-                # zk = ZK(machine_ip, port=zk_port, timeout=timeout, password=0, force_udp=False, ommit_ping=False)
-                zk = ZK('117.208.111.153', port=4370, timeout=5, password=0, force_udp=False, ommit_ping=True)
+                zk = ZK(machine_ip, port=zk_port, timeout=timeout, password=0, force_udp=False, ommit_ping=True)
+                # zk = ZK('117.208.111.153', port=4370, timeout=5, password=0, force_udp=False, ommit_ping=True)
             except NameError:
                 raise UserError(_("Pyzk module not Found. Please install it with 'pip3 install pyzk'."))
             # conn = self.device_connect(zk)
@@ -202,7 +202,8 @@ class ZkMachine(models.Model):
                                                         'check_in': atten_time})
                                 else:
                                     pass
-                    zk.enableDevice()
+                    # zk.enableDevice()
+                    conn.enable_device()
                     conn.disconnect
                     return True
                 else:
