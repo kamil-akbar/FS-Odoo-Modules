@@ -84,7 +84,7 @@
                             <tr class="active">
                                 <th>Check In Date</th>
                                 <th>Check Out Date</th>
-                                <th>Room</th>
+                                <!-- <th>Room</th> -->
                                 <th>Capacity</th>
                                 <th>No of Days</th>
                                 <th>Charge</th>
@@ -94,7 +94,7 @@
                             <tr>
                                 <td><t t-out="booking.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
                                 <td><t t-out="booking.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
-                                <td><span t-field="booking.room_id"/></td>
+                                <!-- <td><span t-field="booking.room_id"/></td> -->
                                 <td><span t-field="booking.capacity"/></td>
                                 <td><span t-field="booking.days"/></td>  
                                 <td><span t-field="booking.total_price"/></td>   
@@ -160,7 +160,7 @@
                             <th>Booking Name</th>
                             <th>Booking Event Start Date</th>
                             <th>Booking Event End Date</th>
-                            <th>Hall</th>
+                            <!-- <th>Hall</th> -->
                             <th>Boooking State</th>
                         </tr>    
                     </thead>
@@ -170,7 +170,7 @@
                                 <td><span t-field="booking.customer_id.name"/></td>
                                 <td><span t-field="booking.start_date"/></td>
                                 <td><span t-field="booking.end_date"/></td>
-                                <td><span t-field="booking.hall_id"/></td> 
+                                <!-- <td><span t-field="booking.hall_id"/></td>  -->
                                 <td><span t-field="booking.stages"/></td>   
                             </tr>
                         </t>
