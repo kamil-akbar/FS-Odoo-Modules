@@ -19,15 +19,15 @@
                         I would like to book a room at your hotel
                         <table class="table">
                             <tr>
-                                <th>Room No</th>
+                                <!-- <th>Room No</th> -->
                                 <th>Check IN</th>
                                 <th>Check OUT</th>
                             </tr>
                             <tr>
                                 <t t-foreach="object.room_ids" t-as="room">
-                                    <td><t t-esc="room.room_id.room_no"/></td>
+                                    <!-- <td><t t-esc="room.room_id.room_no"/></td> -->
                                     <td><t t-esc="room.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
-                                    <td><t t-esc="room.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                                    <td><t t-esc="room.check_out.strftime('%Y-%m-%d 11:00 AM')"/></td>
                                 </t>
                             </tr>
                         </table> 
@@ -62,15 +62,15 @@
                     <p>This is your stay details</p>
                     <table class="table">
                         <tr>
-                            <th>Room No</th>
+                            <!-- <th>Room No</th> -->
                             <th>Check IN</th>
                             <th>Check OUT</th>
                         </tr>
                         <tr>
                             <t t-foreach="object.room_ids" t-as="room">
-                                <td><t t-esc="room.room_id.room_no"/></td>
+                                <!-- <td><t t-esc="room.room_id.room_no"/></td> -->
                                 <td><t t-esc="room.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
-                                <td><t t-esc="room.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                                <td><t t-esc="room.check_out.strftime('%Y-%m-%d 11:00 AM')"/></td>
                             </t>
                         </tr>
                     </table>
@@ -106,15 +106,15 @@
                      <p>This is your room details</p> 
                      <table class="table">
                         <tr>
-                            <th>Room No</th>
+                            <!-- <th>Room No</th> -->
                             <th>Check IN</th>
                             <th>Check OUT</th>
                         </tr>
                         <tr>
                             <t t-foreach="object.room_ids" t-as="room">
-                                <td><t t-esc="room.room_id.room_no"/></td>
+                                <!-- <td><t t-esc="room.room_id.room_no"/></td> -->
                                 <td><t t-esc="room.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
-                                <td><t t-esc="room.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                                <td><t t-esc="room.check_out.strftime('%Y-%m-%d 11:00 AM')"/></td>
                             </t>
                         </tr>
                     </table> 
