@@ -1,0 +1,62 @@
+<odoo>
+    <record id="paperformat_mass_report" model="report.paperformat">
+        <field name="name">Hotel A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">37</field>
+        <field name="margin_bottom">50</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">140</field>
+    </record>
+    <record id="paperformat110" model="report.paperformat">
+        <field name="name">Invoice Report 110</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">220</field>
+        <field name="page_width">113</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">12</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">130</field>
+    </record>
+    <record id="action_room_per_day_id" model="ir.actions.report">
+        <field name="name">Hotel Report</field>
+        <field name="model">booking.all.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_advance_hotel_management.room_per_day_report</field>
+        <field name="report_file">pways_advance_hotel_management.room_per_day_report</field>
+        <field name="paperformat_id" ref="pways_advance_hotel_management.paperformat_mass_report"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_table_kot" model="ir.actions.report">
+        <field name="name">Table Order</field>
+        <field name="model">hotel.restaurant.kitchen.order.tickets</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_advance_hotel_management.table_kitchen_order</field>
+        <field name="report_file">pways_advance_hotel_management.table_kitchen_order</field>
+        <field name="binding_model_id" 
+                ref="pways_advance_hotel_management.model_hotel_restaurant_kitchen_order_tickets"/>
+        <field name="paperformat_id" ref="pways_advance_hotel_management.paperformat110"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_room_food_order_kot" model="ir.actions.report">
+        <field name="name">Print KOT</field>
+        <field name="model">hotel.restaurant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_advance_hotel_management.room_food_kitchen_order</field>
+        <field name="report_file">pways_advance_hotel_management.room_food_kitchen_order</field>
+        <field name="binding_model_id" ref="pways_advance_hotel_management.model_hotel_restaurant"/>
+        <field name="paperformat_id" ref="pways_advance_hotel_management.paperformat110"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

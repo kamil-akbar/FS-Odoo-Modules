@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="booking_details_draft_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <span t-field="doc.customer_id"/><br/>
+                            <span t-field="doc.customer_id.street"/><br/>
+                            <span t-field="doc.customer_id.street2"/><br/>
+                            <span t-field="doc.customer_id.state_id"/><br/>
+                            <span t-field="doc.customer_id.zip"/><br/>
+                            <span t-field="doc.customer_id.company_name"/><br/>
+                            <span t-field="doc.customer_id.email"/><br/>
+                            <span t-field="doc.customer_id.phone"/><br/>
+                            <style>
+                                tr, td {
+                                padding: 5px;
+                                }
+                            </style>
+                            <center>
+                                <h3>
+                                    <span>
+                                       Draft Booking Information
+                                    </span>
+                                </h3>
+                            </center>
+                            <table class="table">
+                                <tbody>
+                                    <tr style="text-align:center;">
+                                        <td colspan="2">
+                                            Booking No
+                                            <br/>
+                                            <h4>
+                                                <strong>
+                                                    <span t-field="doc.booking_number"/>
+                                                </strong>
+                                            </h4>
+                                        </td>
+                                        <td colspan="2">
+                                            Customer
+                                            <br/>
+                                            <h4>
+                                                <strong>
+                                                    <span t-field="doc.customer_id"/>
+                                                </strong>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr style="text-align:center;">
+                                        <td>Total Amount
+                                            <br/>
+                                            <h5>
+                                                <strong>
+                                                    <span t-field="doc.total_amount"/>
+                                                </strong>
+                                            </h5>
+                                        </td>
+                                        <td>Advance Amount
+                                            <br/>
+                                            <h5>
+                                                <strong>
+                                                    <t t-if="doc.is_advance">
+                                                        <span t-field="doc.advance_amount"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        No Advance Amount
+                                                    </t>
+                                                </strong>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            No. of Rooms
+                                            <h5>
+                                                <strong>
+                                                    <span t-field="doc.no_of_room"/>
+                                                </strong>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            No. of People
+                                            <h5>
+                                                Adult
+                                                <strong>
+                                                    <span t-field="doc.adults"/>
+                                                </strong>
+                                                Children
+                                                <strong>
+                                                    <span t-field="doc.children"/>
+                                                </strong>
+                                            </h5>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr/>
+                            <table style="width: 100%; margin-top: 30px; font-size: 17px;">
+                                <tr style="border-bottom: 1px solid;text-align:center;">
+                                    <td colspan="5">
+                                        <strong>
+                                            Room Details
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid;background: #F1F3F3;">
+                                    <td>
+                                        <strong>Room No:</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Check in</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Check out</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Number Of Days</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Amount</strong>
+                                    </td>
+                                </tr>
+                                <t t-foreach='doc.room_ids' t-as='line'>
+                                    <tr>
+                                        <td scope="col">
+                                            <span t-field='line.room_id'/>
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.check_in'/>
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.check_out'/>
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.days'/>
+                                            Days
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.total_price'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr style="border-top:1px solid;">
+                                    <td colspan="3">
+                                    </td>
+                                    <td style="border-bottom: 1px solid;background: #F1F3F3;">
+                                        <span>
+                                            <strong>
+                                                Breakfast
+                                                <br/>
+                                                Lunch
+                                                <br/>
+                                                Dinner
+                                            </strong>
+                                        </span>
+                                    </td>
+                                    <td style="border-bottom: 1px solid;background: #F1F3F3;">
+                                        <span>
+                                            <t t-if="doc.is_breakfast_included">
+                                                <span t-field="doc.breakfast_charge"/>
+                                            </t>
+                                            <t t-else="">
+                                                Not Included
+                                            </t>
+                                            <br/>
+                                            <t t-if="doc.is_lunch_included">
+                                                <span t-field="doc.lunch_charge"/>
+                                            </t>
+                                            <t t-else="">
+                                                Not Included
+                                            </t>
+                                            <br/>
+                                            <t t-if="doc.is_dinner_included">
+                                                <span t-field="doc.dinner_charge"/>
+                                            </t>
+                                            <t t-else="">
+                                                Not Included
+                                            </t>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                    </td>
+                                    <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                        <strong>
+                                            Total Room Charges
+                                        </strong>
+                                    </td>
+                                    <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                        <strong>
+                                            <span t-field="doc.room_total_charges"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                            <t t-if="doc.transport_ids">
+                                <hr/>
+                                <table style="width: 100%; margin-top: 30px; font-size: 17px;">
+                                    <tr style="border-bottom: 1px solid;text-align:center;">
+                                        <td colspan="5">
+                                            <strong>
+                                                Transport Services
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid;background: #F1F3F3;">
+                                        <td>
+                                            <strong>Transport Type:</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Time</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Total KM</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Charges / Km</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Charge</strong>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach='doc.transport_ids' t-as='line'>
+                                        <tr>
+                                            <td>
+                                                <span t-field='line.transport_type'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.time'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.km'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.charges'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.total_charges'/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="3">
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                Total Transport Charges
+                                            </strong>
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                <span t-field="doc.transport_total_charges"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+                            <t t-if="doc.laundry_ids">
+                                <hr/>
+                                <table style="width: 100%; margin-top: 30px; font-size: 17px;">
+                                    <tr style="border-bottom: 1px solid;text-align:center;">
+                                        <td colspan="5">
+                                            <strong>
+                                                Laundry Service
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid;background: #F1F3F3;">
+                                        <td>
+                                            <strong>Service</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Time</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Qty.</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Charge / Qty.</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Total Charges</strong>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach='doc.laundry_ids' t-as='line'>
+                                        <tr>
+                                            <td>
+                                                <span t-field='line.service_name_id'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.create_date'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.quantity'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.charges'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.total_charges'/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="3">
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                Total Laundry Charges
+                                            </strong>
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                <span t-field="doc.laundry_total_charges"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+                            <t t-if="doc.restaurant_ids">
+                                <hr/>
+                                <table style="width: 100%; margin-top: 30px; font-size: 17px;">
+                                    <tr style="border-bottom: 1px solid;text-align:center;">
+                                        <td colspan="6">
+                                            <strong>
+                                                Restaurant Service
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach='doc.restaurant_ids' t-as='line'>
+                                        <tr style="border-bottom: 1px solid;">
+                                            <td style="background: #F1F3F3;">
+                                                <spna>
+                                                    <strong>
+                                                        <span t-field="line.reservation_number"/>
+                                                    </strong>
+                                                    <br/>
+                                                    Room No.
+                                                    <strong>
+                                                        <span t-field="line.room_id"/>
+                                                    </strong>
+                                                    <br/>
+                                                    <span t-field="line.create_date"/>
+                                                </spna>
+                                            </td>
+                                            <td colspan="5" style="margin:10px;">
+                                                <table style="width: 100%; font-size: 17px;border:1px solid;">
+                                                    <tr style="border-bottom: 1px solid;background: #F1F3F3;">
+                                                        <td style="padding-left:10px;">
+                                                            <strong>
+                                                                Food Included In Package
+                                                            </strong>
+                                                        </td>
+                                                        <td>
+                                                            <strong>
+                                                                Food
+                                                            </strong>
+                                                        </td>
+                                                        <td>
+                                                            <strong>
+                                                                Price
+                                                            </strong>
+                                                        </td>
+                                                        <td>
+                                                            <strong>
+                                                                Qty.
+                                                            </strong>
+                                                        </td>
+                                                        <td>
+                                                            <strong>
+                                                                Subtotal
+                                                            </strong>
+                                                        </td>
+                                                    </tr>
+                                                    <t t-foreach='line.customer_foods_ids' t-as='food'>
+                                                        <tr>
+                                                            <td style="padding-left:10px;">
+                                                                <t t-if="food.food_included">
+                                                                    Yes
+                                                                </t>
+                                                                <t t-else="">
+                                                                    No
+                                                                </t>
+                                                            </td>
+                                                            <td>
+                                                                <span t-field="food.food_id"/>
+                                                            </td>
+                                                            <td>
+                                                                <span t-field="food.price"/>
+                                                            </td>
+                                                            <td>
+                                                                <span t-field="food.quantity"/>
+                                                            </td>
+                                                            <td>
+                                                                <span t-field="food.subtotal_amount"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="4">
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                Total Restaurant Charges
+                                            </strong>
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                <span t-field="doc.restaurant_services_charges"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+                            <t t-if="doc.service_ids">
+                                <hr/>
+                                <table style="width: 100%; margin-top: 30px; font-size: 17px;">
+                                    <tr style="border-bottom: 1px solid;text-align:center;">
+                                        <td colspan="5">
+                                            <strong>
+                                                Extra Services
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid;background: #F1F3F3;">
+                                        <td>
+                                            <strong>Service</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Date</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Qty.</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Amount</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Total Amount</strong>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach='doc.service_ids' t-as='line'>
+                                        <tr>
+                                            <td>
+                                                <span t-field='line.service'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.create_date'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.quantity'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.amount'/>
+                                            </td>
+                                            <td>
+                                                <span t-field='line.all_amount'/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="3">
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                Total Service Charges
+                                            </strong>
+                                        </td>
+                                        <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                            <strong>
+                                                <span t-field="doc.all_service_amount"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <record id="booking_details_draft_report_id" model="ir.actions.report">
+        <field name="name">Draft Invoice Report</field>
+        <field name="model">hotel.booking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_advance_hotel_management.booking_details_draft_report</field>
+        <field name="report_file">pways_advance_hotel_management.booking_details_draft_report</field>
+        <field name="print_report_name">'Booking Details'</field>
+        <field name="binding_model_id" ref="model_hotel_booking"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

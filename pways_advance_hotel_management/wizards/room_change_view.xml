@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="room_change_form_view" model="ir.ui.view">
+            <field name="name">room.change.form.view</field>
+            <field name="model">room.change</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="booking_id" invisible="1"/>
+                            <field name="old_room_id" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="check_in" required="1"/>
+                        </group>
+                        <group>
+                            <field name="check_out" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="room_id" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="is_room_change_charges"/>
+                        </group>
+                        <group>
+                            <field name="charges"
+                                   attrs="{'required':[('is_room_change_charges','=',True)],'invisible':[('is_room_change_charges','=',False)]}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Change" name="action_room_change" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="room_change_action" model="ir.actions.act_window">
+            <field name="name">Room Change</field>
+            <field name="res_model">room.change</field>
+            <field name="target">new</field>
+            <field name="view_mode">form</field>
+        </record>
+    </data>
+</odoo>

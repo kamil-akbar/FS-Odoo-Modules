@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_terms_and_conditions_form" model="ir.ui.view">
+            <field name="name">terms.and.conditions.form</field>
+            <field name="model">terms.and.conditions</field>
+            <field name="arch" type="xml">
+                <form string="Terms and Conditions">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="content" widget="html" options="{'mode': 'edit'}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_terms_and_conditions" model="ir.actions.act_window">
+            <field name="name">Terms and Conditions</field>
+            <field name="res_model">terms.and.conditions</field>
+            <field name="view_mode">form</field>
+        </record>
+        <menuitem id="menu_terms_and_conditions_config" name="Terms and Conditions" parent="terms_menu" action="action_terms_and_conditions"/>
+    </data>
+</odoo>

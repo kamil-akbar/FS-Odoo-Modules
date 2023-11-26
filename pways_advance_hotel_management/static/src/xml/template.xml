@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="hotelDashboard">
+        <section class="section hospital_dashboard">
+            <div class="container">   
+                <br/><br/>             
+                <h2 style="text-align: center;" id='company'></h2>
+                <div class="row">
+                    <div class="col-md-12 mb-4 mt32 mb16">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-5">
+                                <h2 class="section-header">Booking</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container property_dashboard">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-sm-6 active_booking">
+                        <div class="card card-xl-stretch mb-xl-8 ">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-info">
+                                            <span class="svg-icon svg-icon-info svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/color-glass/48/overtime--v1.png" alt="overtime--v1"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end" >
+                                        <span class="text-dark fw-bolder fs-2" id="active_booking_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1" style="color:red;">Room Bookings</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-inquiry">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/color/48/why-us-male--v1.png" alt="why-us-male--v1"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="inquiry_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Booking Inquiry</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 today-check-in">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-general">
+
+                                            <span class="svg-icon svg-icon-general svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/fluency/48/hotel-check-in.png" alt="hotel-check-in"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="today_check_in">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Today's Check In</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 today-check-out">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-progress">
+                                            <span class="svg-icon svg-icon-progress svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/fluency/48/hotel-chekc-out.png" alt="hotel-chekc-out"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="today_check_out">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Today's Check Out</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-4 mt32 mb16">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-5">
+                                <h2 class="section-header">Staff</h2>
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+            <div class="container property_dashboard">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-staff">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/fluency/48/group.png" alt="group"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="staff_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Staff</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-staff-attandance">
+                        <div class="card card-xl-stretch mb-xl-8 ">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/color/48/checked-user-female.png" alt="checked-user-female"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="attendance_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Attandance</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-staff-leave">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/fluency/48/emergency-exit.png" alt="emergency-exit"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="leave_count">0</span>
+                                        <span class="text-dark fw-bolder fw-bold mt-1">Leave</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-staff-available">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-staff-music-festival-flaticons-lineal-color-flat-icons.png" alt="external-staff-music-festival-flaticons-lineal-color-flat-icons"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="staff_available_count">0</span>
+                                        <span class="text-dark fw-bolder fw-bold mt-1">Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-4 mt32 mb16">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-5">
+                                <h2 class="section-header">Restaurant</h2>
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+            <div class="container property_dashboard">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-food">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-success">
+                                            <span class="svg-icon svg-icon-success svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/external-flat-icons-pack-pongsakorn-tan/64/external-contact-social-distance-flat-icons-pack-pongsakorn-tan.png" alt="external-contact-social-distance-flat-icons-pack-pongsakorn-tan"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="food_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Food Orders</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-table-book">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-success">
+                                            <span class="svg-icon svg-icon-success svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/color/48/round-table.png" alt="round-table"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="book_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Tables Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-booking">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-success">
+                                            <span class="svg-icon svg-icon-success svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/arcade/64/dining-table-light.png" alt="dining-table-light"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="table_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Table Booking</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-order-food">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-success">
+                                            <span class="svg-icon svg-icon-success svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/color/48/food-bar.png" alt="food-bar"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="order_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Order Details</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-4 mt32 mb16">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-5">
+                                <h2 class="section-header">Services</h2>
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+            <div class="container property_dashboard">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-laundry">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-progress">
+                                            <span class="svg-icon svg-icon-progress svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-laundry-inhome-service-flaticons-flat-flat-icons-2.png" alt="external-laundry-inhome-service-flaticons-flat-flat-icons-2"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="laundry_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Laundry</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-housekeeping">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-progress">
+                                            <span class="svg-icon svg-icon-progress svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-housekeeping-cleaning-flaticons-flat-flat-icons.png" alt="external-housekeeping-cleaning-flaticons-flat-flat-icons"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="house_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Housekeeping</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-transports">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/fluency/48/car.png" alt="car"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="transports_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Transports</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 action-hall">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-conference-hotel-management-flaticons-flat-flat-icons.png" alt="external-conference-hotel-management-flaticons-flat-flat-icons"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="hall_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Hall Bookings</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3 col-lg-3 col-sm-6 action-amenities">
+                        <div class="card card-xl-stretch mb-xl-8"> -->
+                            <!--begin::Body-->
+                            <!-- <div class="card-body p-0">
+                                <div class="d-flex flex-stack card-p flex-grow-1">
+                                    <span class="symbol symbol-50px me-2">
+                                        <span class="symbol-label bg-light-danger">
+                                            <span class="svg-icon svg-icon-danger svg-icon-muted svg-icon-2hx">
+                                                <img width="48" height="48" src="https://img.icons8.com/external-color-outline-adri-ansyah/64/external-property-real-estate-color-outline-adri-ansyah-11.png" alt="external-property-real-estate-color-outline-adri-ansyah-11"/>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <div class="d-flex flex-column text-end">
+                                        <span class="text-dark fw-bolder fs-2" id="amenities_count">0</span>
+                                        <span class="text-dark fw-bolder mt-1">Amenities</span>
+                                    </div>
+                                </div>
+                            </div> -->
+                      <!--   </div>
+                    </div> -->
+                </div>
+            </div>
+
+          
+<!--             <div class="container property_dashboard">
+                <div class="mt64 mb16">
+                    <h4>Hotel Statistic</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-full mt16 mb16">
+                            <h5 class="mb16">Booking Status</h5>
+                            <div id="hotel_room"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box box-full mt16 mb16">
+                            <h5 class="mb16">Top 5 Customers</h5>
+                            <div id="hotel_customer"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="box box-full mt16 mb16">
+                            <h5 class="mb16">Room Categories</h5>
+                            <div id="hotel_room_categories"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="box box-full mt16 mb16">
+                            <h5 class="mb16">Monthly Booking</h5>
+                            <div id="hotel_room_booking_month"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box box-full mt16 mb16">
+                            <h5 class="mb16">Date wise booking</h5>
+                            <div id="hotel_room_booking_date"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </section>
+    </t>
+</templates>

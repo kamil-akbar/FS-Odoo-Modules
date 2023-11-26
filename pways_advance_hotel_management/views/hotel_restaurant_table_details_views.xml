@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_restaurant_table_details_form_view" model="ir.ui.view">
+        <field name="name">hotel.restaurant.table.details.form.view</field>
+        <field name="model">table.details</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="stages" widget="statusbar"/>
+                    <button string="Book" name="available_to_booked" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['Available'])]}"/>
+                    <button string="Available" name="booked_to_available" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['Booked'])]}"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="table_number"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="capacity"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_table_details_search_view" model="ir.ui.view">
+        <field name="name">hotel.table.details.search.view</field>
+        <field name="model">table.details</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="table_number"/>
+                <field name="name"/>
+                <field name="capacity"/>
+                <group string="Group By">
+                    <filter name="stages" string="Stage"
+                            context="{'group_by':'stages' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_restaurant_table_details_tree_view" model="ir.ui.view">
+        <field name="name">hotel.restaurant.table.details.tree.view</field>
+        <field name="model">table.details</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="table_number"/>
+                <field name="name"/>
+                <field name="capacity"/>
+                <field name="stages" widget="badge"
+                       decoration-success="stages=='Available'"
+                       decoration-info="stages=='Booked'" string="Stage"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_restaurant_table_details_action" model="ir.actions.act_window">
+        <field name="name">Table Details</field>
+        <field name="res_model">table.details</field>
+        <field name="view_mode">tree,form,activity</field>
+    </record>
+</odoo>

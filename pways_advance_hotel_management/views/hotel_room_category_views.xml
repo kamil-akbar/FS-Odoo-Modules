@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_room_category_form_view" model="ir.ui.view">
+        <field name="name">hotel.room.category.form.view</field>
+        <field name="model">hotel.room.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="price"/>
+                            <field name="adults"/>
+                            <field name="child"/>
+                            <!-- <field name ="product_cate_id"/> -->
+                            <!-- <field name="category_id"/> -->
+                        </group>
+                        <group>
+                            <field name="image" widget="image" string="Room Image"/>
+                        </group>
+                   </group>
+                    <notebook>
+                        <page string="Rooms">
+                            <field name="category_ids" />
+                        </page>
+                        <page string="Facilities">
+                            <field name="room_facilities_ids">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click border-bottom rounded"
+                                                 style="width:130px;height:60px;">
+                                                <div style="width:40%;float:left;display:inline-block;">
+                                                    <img alt="Avtar"
+                                                         t-att-src="kanban_image('hotel.room.facilities','avatar',record.id.raw_value)"
+                                                         style="width:50px;height:40px;"/>
+                                                </div>
+                                                <div style="width:60%;float:right;display:inline-block;">
+                                                    <h5 style="color:#714B67;">
+                                                        <strong>
+                                                            <center>
+                                                                <field name="name"/>
+                                                            </center>
+                                                        </strong>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page string="Categories Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_room_category_tree_view" model="ir.ui.view">
+        <field name="name">hotel.room.category.tree.view</field>
+        <field name="model">hotel.room.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_room_category_action" model="ir.actions.act_window">
+        <field name="name">Rooms Categories</field>
+        <field name="res_model">hotel.room.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

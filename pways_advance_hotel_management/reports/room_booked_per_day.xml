@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="room_per_day_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-if="report_type == 'room'">
+                        <b><h3 style="text-align:center"><span>Room Per Days Report of - </span><span t-esc="month"/> <span t-esc="year"/></h3></b>
+                        <br/>
+                        <table class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th colspan="1"></th>
+                                    <t t-foreach="day_names" t-as="day_name">
+                                        <th><t t-esc="day_name"/></th>
+                                    </t>
+                                    <th colspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th>Room Name</th>
+                                    <t t-set="counter" t-value="1"/>
+                                    <t t-foreach="data['end_day']" t-as="emp">
+                                        <th colspan="1">
+                                            <span t-esc="counter"/>
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                        </th>
+                                    </t>
+                                    <th>Total Free</th>
+                                    <th>Total booked</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="data['room_dict'].items()" t-as="rooms">
+                                    <tr align="center">
+                                        <td>
+                                            <span t-esc="rooms[0].room_no"/>
+                                        </td>
+                                        <t t-set="total_book" t-value="0"/>
+                                        <t t-set="total_free" t-value="0"/>
+                                        <t t-foreach="rooms[1].items()" t-as="room">
+                                            <td>
+                                                <t t-if="room[1]">
+                                                    <span>Booked</span>
+                                                    <t t-set="total_book" t-value="total_book + 1"/>
+                                                </t>
+                                                <t t-if="not room[1]">
+                                                    <span>Free</span>
+                                                    <t t-set="total_free" t-value="total_free + 1"/>
+                                                </t>
+                                            </td>
+                                        </t>
+                                        <td>
+                                            <span t-esc="total_free"/>
+                                        </td>
+                                         <td>
+                                            <span t-esc="total_book"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-if="report_type == 'revenue'">
+                        <b><h3 style="text-align:center"><span>Daily Revenue For The Month Report of - </span><span t-esc="month"/> <span t-esc="year"/></h3></b>
+                        <br/>
+                        <table class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th colspan="1"></th>
+                                    <t t-foreach="day_names" t-as="day_name">
+                                        <th><t t-esc="day_name"/></th>
+                                    </t>
+                                    <th colspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th>Room Name</th>
+                                    <t t-set="counter" t-value="1"/>
+                                    <t t-foreach="data['end_day']" t-as="emp">
+                                        <th colspan="1">
+                                            <span t-esc="counter"/>
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                        </th>
+                                    </t>
+                                    <th>Total Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="room_dict.items()" t-as="rooms">
+                                <t t-set="total_revenue" t-value="0"/>
+                                    <tr align="center">
+                                        <td>
+                                            <span t-esc="rooms[0].room_no"/>
+                                        </td>
+                                        <t t-foreach="rooms[1].items()" t-as="room">
+                                            <td>
+                                                <t t-if="room[1]">
+                                                    <span t-esc="room[1][0].get('total_price')"/>
+                                                    <t t-set="total_revenue" t-value="total_revenue + room[1][0].get('total_price')"/>
+                                                </t>
+                                                <t t-if="not room[1]">
+                                                    <span>0</span>
+                                                </t>
+                                            </td>
+                                        </t>
+                                        <td>
+                                            <span t-esc="total_revenue"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>                   
+                    <t t-if="report_type == 'total_revenue'">
+                        <b><h3 style="text-align:center"><span>Yearly Total Revenue Report of - </span><span t-esc="month"/> <span t-esc="year"/></h3></b>
+                        <br/>
+                        <table class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th colspan="1"></th>
+                                    <t t-foreach="my_months" t-as="my_months">
+                                        <th><t t-esc="my_months"/></th>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <th>Room Name</th>
+                                    <t t-set="counter" t-value="1"/>
+                                    <t t-foreach="data['end_month']" t-as="emp">
+                                        <th colspan="1">
+                                            <span t-esc="counter"/>
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                        </th>
+                                    </t>
+                                    <th>Total Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="revenue_dict.items()" t-as="rooms">
+                                <t t-set="total_revenues" t-value="0"/>
+                                    <tr align="center">
+                                        <td>
+                                            <span t-esc="rooms[0].room_no"/>
+                                        </td>
+                                        <t t-foreach="rooms[1].items()" t-as="room">
+                                            <td>
+                                                <t t-if="room[1]">
+                                                    <span t-esc="room[1]"/>
+                                                    <t t-set="total_revenues" t-value="total_revenues + room[1]"/>
+                                                </t>
+                                                <t t-if="not room[1]">
+                                                    <span>0</span>
+                                                </t>
+                                            </td>
+                                        </t>
+                                        <td>
+                                            <span t-esc="total_revenues"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <table class="table">
+                            <tr>
+                                <td>Grand Total </td>
+                                <t t-set="grand_total" t-value="0"/>
+                                <t t-foreach="revenue_dict.values()" t-as="room_data">
+                                    <t t-set="grand_total" t-value="grand_total + sum(room_data.values())"/>
+                                </t>
+                                <td> <span t-esc="grand_total"/></td>
+                            </tr>
+                        </table>
+                    </t>
+                    <t t-if="report_type == 'num_book'">
+                        <b><h3 style="text-align:center"><span>Yearly Total Booking Report of - </span><span t-esc="month"/> <span t-esc="year"/></h3></b>
+                        <br/>
+                        <table class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th colspan="1"></th>
+                                    <t t-foreach="my_months" t-as="my_month">
+                                        <th colspan="2"><t t-esc="my_month"/></th>
+                                    </t>
+                                </tr>
+                                 <tr>
+                                    <th>Room Name</th>
+                                    <t t-foreach="my_months" t-as="my_month">
+                                        <th>Free</th>
+                                        <th>Book</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="revenue_dict.items()" t-as="rooms">
+                                    <tr align="center">
+                                        <td>
+                                            <span t-esc="rooms[0].room_no"/>
+                                        </td>
+                                        <t t-foreach="rooms[1].items()" t-as="room">
+                                            <td>
+                                                <t t-if="room[1]">
+                                                    <span t-esc="room[1][0]"/>
+                                                </t>
+                                                <t t-if="not room[1]">
+                                                    <span>0</span>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="room[1]">
+                                                    <span t-esc="room[1][1]"/>
+                                                </t>
+                                                <t t-if="not room[1]">
+                                                    <span>0</span>
+                                                </t>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+                            

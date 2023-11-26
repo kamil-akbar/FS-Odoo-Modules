@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_transport_location_form_view" model="ir.ui.view">
+        <field name="name">hotel.transport.location.form.view</field>
+        <field name="model">location.detail</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                             <span class="o_form_label o_td_label" name="address_name">
+                                <b>Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="name" placeholder="Location..." class="o_address_street"/>
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_transport_location_tree_view" model="ir.ui.view">
+        <field name="name">hotel.transport.location.tree.view</field>
+        <field name="model">location.detail</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="street"/>
+                <field name="street2"/>
+                <field name="city"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_transport_location_action" model="ir.actions.act_window">
+        <field name="name">Location Details</field>
+        <field name="res_model">location.detail</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

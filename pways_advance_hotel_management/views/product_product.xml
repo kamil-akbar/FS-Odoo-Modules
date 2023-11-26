@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_product_form_inherited" model="ir.ui.view">
+        <field name="name">view.product.product.form.inherited</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="isroom"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_ytemplate_form_inherited" model="ir.ui.view">
+        <field name="name">view.product.tempate.form.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_id']" position="after">
+                <field name="room_capacity" string="Room Capacity"/>
+                <field name="adults" string="Adults"/>
+                <field name="child"  string="Child"/>
+                <field name="room_category"/>
+                <field name="current_available_room"/>
+            </xpath>
+            <xpath expr="//notebook[last()]" position="inside">
+                <page string="Rooms">
+                    <field name="room_ids" readonly='1'/>
+                </page>
+                <page string="Room facilities Details">
+                    <field name="room_facilities_ids" string="Room facilities"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_order_line_form_inherited1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="after">
+              <field name="checkin_date" widget="many2many_custom_widget"/>
+              <field name="checkout_date" widget="many2many_custom_widget"/>
+          </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

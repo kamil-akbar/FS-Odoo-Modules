@@ -1,0 +1,78 @@
+<odoo>
+    <data>
+        <template id="table_kitchen_order">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-foreach="docs" t-as="order">
+                        <div class="order-section">
+                            <div class="text-center">
+                                <h1><t t-esc="order.order_ids" /></h1>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <h6>Table No: <t t-esc="order.table_nos_ids.table_number" /></h6>
+                                </div>
+                                <div class="col-6">
+                                    <h6 style="float: right;">Waiter Name: <t t-esc="order.waiter_name"/></h6>
+                                </div>
+                            </div>
+                            <table class="table mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="order.kot_list_ids" t-as="kot">
+                                        <tr>
+                                            <td><t t-esc="kot.menucard_id.product_id.name" /></td>
+                                            <td style="float: right;"><t t-esc="kot.item_qty" /></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <template id="room_food_kitchen_order" name="Room Food Order">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-foreach="docs" t-as="order">
+                        <div class="order-section">
+                            <div class="text-center mt-5">
+                                <h1><t t-esc="order.booking_id.booking_number" /></h1>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <h6>Room No: <t t-esc="order.room_id.room_no" /></h6>
+                                </div>
+                                <div class="col-6">
+                                    <h6 style="float: right;">Order Date: <t t-esc="order.create_date"/></h6>
+                                </div>
+                            </div>
+                            <table class="table mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="order.customer_foods_ids" t-as="kot">
+                                        <tr>
+                                            <td><t t-esc="kot.food_id.product_id.name" /></td>
+                                            <td style="float: right;"><t t-esc="kot.quantity" /></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

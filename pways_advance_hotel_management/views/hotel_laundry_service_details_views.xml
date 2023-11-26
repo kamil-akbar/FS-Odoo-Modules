@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_laundry_service_form_view" model="ir.ui.view">
+        <field name="name">hotel.laundry.service.form.view</field>
+        <field name="model">laundry.service</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="stages" widget="statusbar"/>
+                    <button string="In Progress" name="confirm_to_send_laundry" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['Request'])]}"/>
+                    <button string="Completed" name="laundry_to_done" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['In Progress'])]}"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="laundry_service_number"/>
+                    </h1>
+                    <group>
+                        <group string="Date Details">
+                            <field name="create_date" attrs="{'invisible':[('deadline_date','=',False)]}"/>
+                            <field name="deadline_date"/>
+                        </group>
+                        <group string="Customer Details">
+                            <field name="booking_id" string="Booking Number" readonly="1"/>
+                            <field name="customer_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="room_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Laundry Details">
+                            <field name="service_name_id"/>
+                            <field name="laundry_item_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="quantity"/>
+                        </group>
+                        <group string="Charges Details">
+                            <label for="charges" class="mt-1" string="Charge"/>
+                            <div name="charges">
+                                <field name="charges"/>
+                                Per Quantity
+                            </div>
+                            <field name="total_charges"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Responsible ">
+                            <field name="responsible_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_laundry_service_search_view" model="ir.ui.view">
+        <field name="name">hotel.laundry.service.search.view</field>
+        <field name="model">laundry.service</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="laundry_service_number"/>
+                <field name="booking_id"/>
+                <field name="customer_id"/>
+                <field name="room_id"/>
+                <field name="service_name_id"/>
+                <field name="laundry_item_ids"/>
+
+                <group string="Group By">
+                    <filter name="room_id" string="Room"
+                            context="{'group_by':'room_id' }"
+                    />
+                    <filter name="service_name_id" string="Service Name"
+                            context="{'group_by':'service_name_id' }"
+                    />
+                    <filter name="stages" string="Stage"
+                            context="{'group_by':'stages' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_laundry_service_tree_view" model="ir.ui.view">
+        <field name="name">hotel.laundry.service.tree.view</field>
+        <field name="model">laundry.service</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="laundry_service_number" string="Service Number"/>
+                <field name="booking_id" string="Booking Number"/>
+                <field name="customer_id"/>
+                <field name="room_id"/>
+                <field name="service_name_id"/>
+                <field name="create_date"/>
+                <field name="deadline_date"/>
+                <field name="responsible_id"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="laundry_item_ids" widget="many2many_tags"/>
+                <field name="charges"/>
+                <field name="quantity"/>
+                <field name="total_charges"/>
+                <field name="stages" widget="badge"
+                       decoration-success="stages=='Request'"
+                       decoration-info="stages=='Completed'" string="Stage"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_laundry_service_action" model="ir.actions.act_window">
+        <field name="name">Laundry Service Details</field>
+        <field name="res_model">laundry.service</field>
+        <field name="view_mode">tree,form,activity</field>
+    </record>
+</odoo>

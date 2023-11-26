@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="booking_draft_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <span t-field="doc.partner_id"/><br/>
+                            <span t-field="doc.partner_id.street"/><br/>
+                            <span t-field="doc.partner_id.street2"/><br/>
+                            <span t-field="doc.partner_id.state_id"/><br/>
+                            <span t-field="doc.partner_id.zip"/><br/>
+                            <span t-field="doc.partner_id.company_name"/><br/>
+                            <span t-field="doc.partner_id.email"/><br/>
+                            <span t-field="doc.partner_id.phone"/><br/>
+                            <style>
+                                tr, td {
+                                padding: 5px;
+                                }
+                            </style>
+                            <center>
+                                <h3>
+                                    <span>
+                                        Booking Information
+                                    </span>
+                                </h3>
+                            </center>
+                            <table class="table">
+                                <tbody>
+                                    <tr style="text-align:center;">
+                                        <td colspan="2">
+                                            Booking No
+                                            <br/>
+                                            <h4>
+                                                <strong>
+                                                    <span t-field="doc.booking_id"/>
+                                                </strong>
+                                            </h4>
+                                        </td>
+                                        <td colspan="2">
+                                            Customer
+                                            <br/>
+                                            <h4>
+                                                <strong>
+                                                    <span t-field="doc.partner_id"/>
+                                                </strong>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr/>
+                            <table style="width: 100%; margin-top: 30px; font-size: 17px;">
+                                <tr style="border-bottom: 1px solid;text-align:center;">
+                                    <td colspan="5">
+                                        <strong>
+                                            Room Details
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid;background: #F1F3F3;">
+                                    <td>
+                                        <strong>Room No:</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Check in</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Check out</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Number Of Days</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Amount</strong>
+                                    </td>
+                                </tr>
+                                <t t-foreach='doc.invoice_line_ids' t-as='line'>
+                                    <tr>
+                                        <td scope="col">
+                                            <span t-field='line.name'/>
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.quantity'/>
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.price_unit'/>
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.tax_ids'/>
+                                            Days
+                                        </td>
+                                        <td scope="col">
+                                            <span t-field='line.price_subtotal'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="3">
+                                    </td>
+                                    <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                        <strong>
+                                            Total Room Charges
+                                        </strong>
+                                    </td>
+                                    <td style="border-top:1px solid;border-bottom:1px solid;background: #C2F0C5;">
+                                        <strong>
+                                            <span t-field="doc.room_total_charges"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="booking_details_invoice_report_id" model="ir.actions.report">
+            <field name="name">Invoice Reports</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pways_advance_hotel_management.booking_draft_report</field>
+            <field name="report_file">pways_advance_hotel_management.booking_draft_report</field>
+            <field name="print_report_name">'Booking Details'</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

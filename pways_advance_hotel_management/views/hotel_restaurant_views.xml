@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_restaurant_form_view" model="ir.ui.view">
+        <field name="name">hotel.restaurant.form.view</field>
+        <field name="model">hotel.restaurant</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="stages" widget="statusbar"/>
+                    <button string="Generate KOT" name='action_create_kot' 
+                    type="object" attrs="{'invisible': [('kot', '=', True)]}"/>
+                    <button string="Delivered" name="confirm_to_delivered" type="object" attrs="{'invisible': [('stages', 'not in', ['Confirm'])]}"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="reservation_number"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="kot" invisible="1"/>
+                            <field name="booking_id" string="Booking Number"/>
+                            <field name="customer_id"/>
+                            <field name="room_id"/>
+                        </group>
+                        <group>
+                            <field name="create_date" string="Order Date"/>
+                            <label for="is_table_booking" class="mt-1"/>
+                            <div name="is_table_booking">
+                                <field name="is_table_booking" class="oe_inline"/>
+                                <button name="action_book_table"
+                                        type="object"
+                                        string="Book Table"
+                                        style="margin-left:10px;"
+                                        attrs="{'invisible':['|',('is_table_booking','=',False),('table_stages','=','Booked')]}"/>
+                                <button name="action_free_table"
+                                        type="object"
+                                        string="Free"
+                                        style="margin-left:10px;"
+                                        attrs="{'invisible':['|',('is_table_booking','=',False),('table_stages','!=','Booked')]}"/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order List">
+                            <field name="customer_foods_ids">
+                                <form>
+                                    <header>
+                                        <field name="stages" widget="statusbar"/>
+                                        <button string="Prepared" name="confirm_to_prepared" type="object"
+                                                attrs="{'invisible': [('stages', 'not in', ['Confirm'])]}"/>
+                                        <button string="Delivered" name="prepared_to_delivered" type="object"
+                                                attrs="{'invisible': [('stages', 'not in', ['Prepared'])]}"/>
+                                    </header>
+                                    <group string="Food Details">
+                                        <group>
+                                            <field name="food_id"/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <label for="price" class="mt-1" string="Price"/>
+                                            <div name="price">
+                                                <field name="price"/>
+                                                Per Quantity
+                                            </div>
+                                        </group>
+                                        <group>
+                                            <field name="quantity"/>
+                                            <field name="subtotal_amount"/>
+                                        </group>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="food_id" string="Foods"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price"/>
+                                    <field name="quantity"/>
+                                    <field name="subtotal_amount"/>
+                                    <field name="stages" string="Stage"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Table Reservation" attrs="{'invisible':[('is_table_booking','=',False)]}">
+                            <group>
+                                <group>
+                                    <field name="res_start" attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="res_end" attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                </group>
+                            </group>
+                            <group string="Table Details">
+                                <group>
+                                    <label for="table_id" class="mt-1"/>
+                                    <div name="table_id" attrs="{'required':[('is_table_booking','=',True)]}">
+                                        <field name="table_id" class="oe_inline" force_save="1"/>
+                                        <field name="table_stages" attrs="{'invisible':[('table_id','=',False)]}"
+                                               widget="badge"
+                                               decoration-success="table_stages=='Available'"
+                                               decoration-warning="table_stages=='Booked'"/>
+                                    </div>
+                                    <field name="table_capacity"/>
+                                </group>
+                                <group>
+                                    <field name="no_of_person" attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                    <field name="table_charges" attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_restaurant_kanban_view" model="ir.ui.view">
+        <field name="name">hotel.restaurant.kanban.view</field>
+        <field name="model">hotel.restaurant</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click" style="width: 18rem; list-style:none;">
+                            <ul class="list-group list-group-flush" style="list-style:none;">
+                                <li>
+                                    <b>Reservation Number:</b>
+                                    <field name="reservation_number"/>
+                                </li>
+                                <li>
+                                    <b>Customer:</b>
+                                    <field name="customer_id" string="Customer"/>
+                                </li>
+                                <li>
+                                    <b>Room No:</b>
+                                    <field name="room_id"/>
+                                </li>
+                                <li>
+                                    <b>Order Date</b>
+                                    <field name="create_date" string="Order Date"/>
+                                </li>
+                                <li>
+                                    <b>Total Charges</b>
+                                    <field name="total_charges"/>
+                                </li>
+                                <li>
+                                    <b>Status</b>
+                                    <field name="stages" widget="badge"
+                                           decoration-success="stages=='Confirm'"
+                                           decoration-info="stages=='Delivered'" string="Stage"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="hotel_restaurant_search_view" model="ir.ui.view">
+        <field name="name">hotel.restaurant.search.view</field>
+        <field name="model">hotel.restaurant</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="reservation_number"/>
+                <field name="booking_id"/>
+                <field name="customer_id"/>
+                <field name="room_id"/>
+                <field name="create_date"/>
+                <group string="Group By">
+                    <filter name="create_date" string="Create Date "
+                            context="{'group_by':'create_date' }"
+                    />
+                    <filter name="room_id" string="Room"
+                            context="{'group_by':'room_id' }"
+                    />
+                    <filter name="stages" string="Stage"
+                            context="{'group_by':'stages' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_restaurant_tree_view" model="ir.ui.view">
+        <field name="name">hotel.restaurant.tree.view</field>
+        <field name="model">hotel.restaurant</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="reservation_number"/>
+                <field name="booking_id" string="Booking Number"/>
+                <field name="customer_id"/>
+                <field name="room_id"/>
+                <field name="create_date" string="Order Date"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="is_table_booking" string="Is Table Booking"/>
+                <field name="total_charges"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_restaurant_action" model="ir.actions.act_window">
+        <field name="name">Room Order Details</field>
+        <field name="res_model">hotel.restaurant</field>
+        <field name="view_mode">kanban,tree,form,activity</field>
+    </record>
+</odoo>

@@ -1,0 +1,117 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_booking_inquiry_form" model="ir.ui.view">
+            <field name="name">booking.inquiry.form</field>
+            <field name="model">booking.inquiry</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight"
+                                states="draft"/>
+                        <button name="booking" string="Booking" type="object" class="oe_highlight" states="confirm"/>
+                        <button name="%(pways_advance_hotel_management.action_booking_inquiry_payment_wizard)d" string="Advance Payment" 
+                            context="{'default_booking_id': active_id}" type="action" class="oe_highlight" states="confirm,booking"/>
+                        <button name="action_open_form" string="Send Email" type="object" class="oe_highlight" 
+                                states="confirm,booking,draft" />
+                        <button name="action_cancel" string="Cancel" type="object" class="oe_highlight"                           states="Confirm,check_in,Draft"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="button_view_booking"
+                                type="object"
+                                class="oe_stat_button">
+                                <field name="booking_count" widget="statinfo" string="Room"/>
+                            </button>
+                            <button name="button_hall_booking"
+                                type="object"
+                                class="oe_stat_button">
+                                <field name="hall_count" widget="statinfo" string="Hall"/>
+                            </button>
+                            <button name="button_rest_booking"
+                                type="object"
+                                class="oe_stat_button">
+                                <field name="rest_count" widget="statinfo" string="Restaurant"/>
+                            </button>
+                        </div>
+                        <h1>
+                            <field name="booking_number"/>
+                            <field name="id" invisible="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <field name="inquiry_for"/>
+                                <field name="arrival_date" required='1'/>
+                                <field name="room_type"/>
+                                <field name="is_laundry"/>
+                                <field name="is_food_included"/>
+                            </group>
+                            <group>
+                                <field name="departure_date" required='1'/>
+                                <field name="child"/>
+                                <field name="number_rooms"/>
+                                <field name="person"/>
+                                <field name="booking_time"/>
+                                <field name="hall_type" />
+                                <field name="is_transport_included"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Payment" name="payment">
+                                <field name="payment_ids"/>
+                            </page>
+                            <page string="Description" name="description">
+                                <field name="info"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"
+                            groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_booking_inquiry_tree" model="ir.ui.view">
+            <field name="name">booking.inquiry.tree</field>
+            <field name="model">booking.inquiry</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="inquiry_for"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_booking_inquiry_search" model="ir.ui.view">
+            <field name="name">booking.inquiry.search</field>
+            <field name="model">booking.inquiry</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="arrival_date"/>
+                    <field name="departure_date"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_booking_inquiry" model="ir.actions.act_window">
+            <field name="name">Booking Inquiries</field>
+            <field name="res_model">booking.inquiry</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_booking_inquiry" name="Booking Inquiries" action="action_booking_inquiry" parent="menu_hotel_booking" sequence="-1"/>
+    </data>
+</odoo>

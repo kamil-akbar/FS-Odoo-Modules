@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_extra_services_form_view" model="ir.ui.view">
+        <field name="name">hotel.extra.services.form.view</field>
+        <field name="model">hotel.extra.services</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="service"/>
+                            <field name="amount"/>
+                            <field name="quantity"/>
+<!--                            <field name="all_amount"/>-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_extra_services_tree_view" model="ir.ui.view">
+        <field name="name">hotel.extra.services.tree.view</field>
+        <field name="model">hotel.extra.services</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="service"/>
+                <field name="amount"/>
+                <field name="quantity"/>
+<!--                <field name="all_amount"/>-->
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_extra_services_action" model="ir.actions.act_window">
+        <field name="name">Extra Services</field>
+        <field name="res_model">hotel.extra.services</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

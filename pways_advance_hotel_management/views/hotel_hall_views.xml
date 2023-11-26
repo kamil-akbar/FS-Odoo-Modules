@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_hall_form_view" model="ir.ui.view">
+        <field name="name">hotel.hall.form.view</field>
+        <field name="model">hotel.hall</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="avatar" widget="image" class="oe_avatar"
+                           options="{&quot;preview_image&quot;: &quot;avatar&quot;}"/>
+                    <div class="oe_title mb24">
+                        <h1>
+                            <field class="text-break" name="hall_no" default_focus="1" placeholder="Hall Number"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="floor_id"/>
+                            <field name="capacity"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="price"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Facilities">
+                            <field name="hall_facilities_ids">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click border-bottom rounded"
+                                                 style="width:130px;height:60px;">
+                                                <div style="width:40%;float:left;display:inline-block;">
+                                                    <img alt="Avtar"
+                                                         t-att-src="kanban_image('hotel.room.facilities','avatar',record.id.raw_value)"
+                                                         style="width:50px;height:40px;"/>
+                                                </div>
+                                                <div style="width:60%;float:right;display:inline-block;">
+                                                    <h5 style="color:#714B67;">
+                                                        <strong>
+                                                            <center>
+                                                                <field name="name"/>
+                                                            </center>
+                                                        </strong>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_hall_search_view" model="ir.ui.view">
+        <field name="name">hotel.hall.search.view</field>
+        <field name="model">hotel.hall</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="hall_no"/>
+                <field name="floor_id"/>
+                <group string="Group By">
+                    <filter name="floor_id" string="Floor "
+                            context="{'group_by':'floor_id' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_hall_tree_view" model="ir.ui.view">
+        <field name="name">hotel.hall.tree.view</field>
+        <field name="model">hotel.hall</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="hall_no"/>
+                <field name="floor_id"/>
+                <field name="capacity"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_hall_action" model="ir.actions.act_window">
+        <field name="name">Venue Details</field>
+        <field name="res_model">hotel.hall</field>
+        <field name="view_mode">tree,form,activity</field>
+    </record>
+</odoo>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_room_details_form_view" model="ir.ui.view">
+        <field name="name">hotel.room.details.form.view</field>
+        <field name="model">hotel.room.details</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="stages" widget="statusbar" statusbar_visible="Available,Booked"/>
+                    <button string="Book" name="available_to_booked" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['Available'])]}"/>
+                    <button string="Maintenance" name="booked_to_maintenance" type="object"
+                            attrs="{'invisible': [('stages', 'in', ['Booked'])]}"/>
+                    <button string="Available" name="maintenance_to_available" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['Maintenance'])]}"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="room_sequence"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="booking_id" string="Booking Number" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="customer_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Room Details">
+                            <field name="room_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <label for="price" class="mt-1" string="Charge"/>
+                            <div name="price">
+                                <field name="price" class="oe_inline"/>
+                                Per Night
+                            </div>
+                            <field name="capacity"/>
+                            <field name="total_price"/>
+                        </group>
+                        <group string="Booking Details">
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                            <field name="days"/>
+                            <field name="room_status_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    ## for gantt view
+     <record id="hotel_room_details_gantt_view" model="ir.ui.view">
+        <field name="name">hotel.room.details.gantt.view</field>
+        <field name="model">hotel.room.details</field>
+        <field name="arch" type="xml">
+            <gantt string='Rooms' date_start="check_in" date_stop="check_out" default_group_by="room_id" 
+                color="room_status_id" edit="false" collapse_first_level="true">
+                <templates>
+                     <div t-name="gantt-popover">
+                         <div class="row no-gutters">
+                             <div class="col">
+                                 <ul class="pl-1 mb-0">
+                                     <li><strong>Order #: </strong> <t t-esc="booking_id"/></li>
+                                     <li><strong>Checked in : </strong> <t t-esc="userTimezoneStartDate.format('L LT')"/></li>
+                                     <li><strong>Checked out : </strong> <t t-esc="userTimezoneStopDate.format('L LT')"/></li>
+                                     <li><strong>Status : </strong> <t t-field="report_line_status"/>
+                                        <!-- t-field doesn't work, report_line_status isn't a field but a string -->
+                                        <t t-if="late">
+                                            Late
+                                            <t t-if="report_line_status == 'check-in'">
+                                                Checked-in
+                                            </t>
+                                            <t t-elif="report_line_status == 'checke-out'">
+                                                Checked-out
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                          <t t-if="report_line_status == 'check-in'">
+                                              Checked-in
+                                          </t>
+                                          <t t-elif="report_line_status == 'check-out'">
+                                              Checked-out
+                                          </t>
+                                          <t t-else="">
+                                              Reserved
+                                          </t>
+                                        </t>
+                                     </li>
+                                    <li><strong>booking status : </strong> <t t-esc="room_status_id"/></li>
+                                 </ul>
+                             </div>
+                         </div>
+                     </div>
+                 </templates>
+
+            </gantt>
+        </field>
+    </record>
+    <record id="hotel_room_details_calendar_view" model="ir.ui.view">
+        <field name="name">hotel.details.calendar.view</field>
+        <field name="model">hotel.room.details</field>
+        <field name="arch" type="xml">
+            <calendar date_start="check_in" date_stop="check_out" mode="month" quick_add="False"
+                      hide_time="True" event_open_popup="True" color="booking_id">
+                <field name="booking_id"/>
+                <field name="customer_id"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="hotel_room_details_search_view" model="ir.ui.view">
+        <field name="name">hotel.room.details.search.view</field>
+        <field name="model">hotel.room.details</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="room_sequence"/>
+                <field name="booking_id"/>
+                <field name="customer_id"/>
+                <field name="room_id"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+                <group expand="1" string="Group By">
+                    <filter name="check_in" string="Check in "
+                            context="{'group_by':'check_in' }"
+                    />
+                    <filter name="check_out" string="Check out"
+                            context="{'group_by':'check_out' }"
+                    />
+                    <filter name="stages" string="Stage"
+                            context="{'group_by':'stages' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_room_details_tree_view" model="ir.ui.view">
+        <field name="name">hotel.room.details.tree.view</field>
+        <field name="model">hotel.room.details</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="room_sequence"/>
+                <field name="booking_id" string="Booking Number"/>
+                <field name="customer_id"/>
+                <field name="room_id"/>
+                <field name="capacity"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+                <field name="days"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="price"/>
+                <field name="stages" widget="badge"
+                       decoration-success="stages=='Available'"
+                       decoration-danger="stages=='Booked'"
+                       decoration-info="stages=='Maintenance'"/>
+
+            </tree>
+        </field>
+    </record>
+
+ 
+
+<!--     <record id="view_room_checkin_kanban" model="ir.ui.view">
+        <field name="name">hotel.room.kanban</field>
+        <field name="model">hotel.room.details</field>
+        <field name="arch" type="xml">
+            <kanban class="o_room_no_kanban" sample="1">
+                <field name="stages" />
+                <field name="room_id" />
+                <templates>
+                    <t t-name="kanban-box" class="my_class">
+                        <div t-attf-class="p-0 oe_kanban_global_click o_room_kanban_#{record.stages.raw_value}">
+                            <div class="profile-card p-4 text-center">
+                                    <h4 style="color:#0d0c0d; white-space: nowrap; text-overflow: ellipsis; display: flex; justify-content: center;">
+                                        <strong>   
+                                            <field name="room_id"/>
+                                        </strong>
+                                    </h4>
+                                    <div t-if="record.stages.raw_value == 'Complete'">
+                                        <strong style="display: flex; justify-content: center;">Free</strong>
+                                    </div>
+                                    <div t-if="record.stages.raw_value == 'check_in'">
+                                        <strong style="display: flex; justify-content: center;">Booked</strong>
+                                    </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+ -->
+
+    <record id="hotel_room_details_action" model="ir.actions.act_window">
+        <field name="name">Booked Details</field>
+        <field name="res_model">hotel.room.details</field>
+        <field name="view_mode">tree,gantt,form,calendar,activity</field>
+        <field name="context">{}</field>
+
+    </record>
+</odoo>

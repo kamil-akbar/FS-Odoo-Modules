@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_booking_proof_details_form_view" model="ir.ui.view">
+        <field name="name">hotel.booking.proof.details.form.view</field>
+        <field name="model">proof.details</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Customer Details">
+                            <field name="booking_id" string="Booking Number" readonly="1"/>
+                            <field name="customer_id"/>
+                            <field name="person_Id"/>
+                        </group>
+                        <group string="Document Details">
+                            <field name="id_name"/>
+                            <field name="id_number"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="document" filename="file_name" widget="binary"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_booking_proof_search_view" model="ir.ui.view">
+        <field name="name">hotel.booking.proof.search.view</field>
+        <field name="model">proof.details</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="booking_id"/>
+                <field name="id_number"/>
+                <field name="id_name"/>
+                <field name="person_Id"/>
+                <group string="Group By">
+                    <filter name="booking_id" string="Customer "
+                            context="{'group_by':'booking_id' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_booking_proof_details_tree_view" model="ir.ui.view">
+        <field name="name">hotel.booking.proof.details.tree.view</field>
+        <field name="model">proof.details</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="booking_id" string="Customer"/>
+                <field name="id_number"/>
+                <field name="id_name"/>
+                <field name="person_Id"/>
+                <field name="file_name" invisible="1"/>
+                <field name="document" filename="file_name" widget="binary"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_booking_proof_details_action" model="ir.actions.act_window">
+        <field name="name">Proof Details</field>
+        <field name="res_model">proof.details</field>
+        <field name="view_mode">tree,form,activity</field>
+    </record>
+</odoo>

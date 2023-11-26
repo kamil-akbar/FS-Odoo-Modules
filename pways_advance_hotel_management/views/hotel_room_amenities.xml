@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_hotel_room_amenities_type_form" model="ir.ui.view">
+        <field name="name">hotel.room_amenities_type_form</field>
+        <field name="model">hotel.room.amenities.type</field>
+        <field name="arch" type="xml">
+            <form string="Hotel Room Amenities Type">
+                <sheet>
+                    <group>
+                        <field name="name" string="Amenity Type" />
+                        <field name="child_ids" invisible="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Tree view of hotel room amenities type -->
+    <record id="view_hotel_room_amenities_type_list" model="ir.ui.view">
+        <field name="name">hotel.room_amenities_type_list</field>
+        <field name="model">hotel.room.amenities.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_hotel_room_amenities_type_view" model="ir.actions.act_window">
+        <field name="name">Amenities Type</field>
+        <field name="res_model">hotel.room.amenities.type</field>
+        <!-- <field name="context">{}</field> -->
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--===== Room Amenities ===== -->
+    <!-- Form view of hotel room amenities -->
+    <record id="view_hotel_room_amenities_form" model="ir.ui.view">
+        <field name="name">hotel.room.amenities.form</field>
+        <field name="model">hotel.room.amenities</field>
+        <field name="arch" type="xml">
+            <form string="Hotel Room Amenities">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field name="amenities_categ_id" string="Amenities Category"/>
+                            <field name="price" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Search view of hotel room amenities -->
+    <record id="view_hotel_room_aenities_search" model="ir.ui.view">
+        <field name="name">hotel.room_amenities_search</field>
+        <field name="model">hotel.room.amenities</field>
+        <field name="arch" type="xml">
+            <search string="Hotel Room Amenities">
+                <field name="name" />
+                <field name="amenities_categ_id" string="Amenities Category" />
+                <field name="price" string="Amenity rate" />
+            </search>
+        </field>
+    </record>
+    <!-- Tree view of hotel room amenities -->
+    <record id="view_hotel_room_amenities_list" model="ir.ui.view">
+        <field name="name">hotel.room_amenities_list</field>
+        <field name="model">hotel.room.amenities</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="amenities_categ_id" string="Amenities Category" />
+                <field name="list_price" string="Amenity Rate" invisible="1" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_hotel_room_amenities_view_form" model="ir.actions.act_window">
+        <field name="name">Amenities</field>
+        <field name="res_model">hotel.room.amenities</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="context">{'default_iscategid':1,'default_available_in_pos':0} -->
+        <!-- <field name="view_id" ref="view_hotel_room_amenities_list" /> -->
+    </record>
+</odoo>

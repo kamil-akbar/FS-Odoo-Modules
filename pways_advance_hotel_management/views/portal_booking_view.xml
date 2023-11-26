@@ -1,0 +1,216 @@
+<odoo>
+    <data>
+        <template id="menu_hotel_booking123" name="Hotel Booking" inherit_id="portal.portal_my_home">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Hotel Booking</t>
+                    <t t-set="url" t-value="'/my/booking'"/>
+                    <t t-set="placeholder_count" t-value="'hotel_booking_count'"/>
+                </t>
+            </xpath>
+        </template>
+        <template id="menu_booking_inquiry_portal" name="Booking Inquiry" inherit_id="portal.portal_my_home">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Booking Inquiry</t>
+                    <t t-set="url" t-value="'/my/inquiry'"/>
+                    <t t-set="placeholder_count" t-value="'booking_inquiry_count'"/>
+                </t>
+            </xpath>
+        </template>
+        <template id="menu_booking_hall_portal" name="Hotel Hall" inherit_id="portal.portal_my_home">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Hall Booking</t>
+                    <t t-set="url" t-value="'/my/hall'"/>
+                    <t t-set="placeholder_count" t-value="'hall_count'"/>
+                </t>
+            </xpath>
+        </template>
+        <template id="menu_booking_rest_portal" name="Hotel Restaurant" inherit_id="portal.portal_my_home">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Restaurant Booking</t>
+                    <t t-set="url" t-value="'/my/restaurant'"/>
+                    <t t-set="placeholder_count" t-value="'rest_count'"/>
+                </t>
+            </xpath>
+        </template>
+        <template id="portal_my_booking" name="My Application Status">
+            <t t-call="portal.portal_layout">
+                <t t-set="title">Hotel Booking</t>
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Hotel Booking</t>
+                </t>
+                <t t-if="not hotel_booking">
+                    <p>There are currently no booking in your account.</p>
+                </t>
+                <t t-if="hotel_booking" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Booking Number</th>
+                            <th>Booking Name</th>
+                            <th>Price</th>
+                            <th>No of Room</th>
+                            <th>Booking State</th>
+                        </tr>    
+                    </thead>
+                    <t t-foreach="hotel_booking" t-as="booking">
+                        <tr>
+                            <td><a t-att-href="booking.get_portal_url()"><t t-out="booking.booking_number"/></a></td>
+                            <td><t t-out="booking.customer_id.name"/></td>
+                            <td><span t-field="booking.total_amount"/></td>
+                            <td><span t-field="booking.no_of_room"/></td>
+                            <td><span t-field="booking.stages"/></td>   
+                        </tr>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <template id="hotel_booking_details_portal" name="Hotel Booking Portal">
+            <t t-call="portal.portal_layout">
+                <div class="mt-4">
+                    <t t-set="title">Hotel Booking Details </t>
+                    <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                    <t t-call="portal.portal_searchbar">
+                        <t t-set="title">Hotel Booking Details</t>
+                    </t>
+                    <t t-if="not hotel_book.room_ids">
+                        <p>There are currently no booking in your account</p>
+                    </t>
+                    <t t-if="hotel_book.room_ids" t-call="portal.portal_table">
+                        <thead>
+                            <tr class="active">
+                                <th>Check In Date</th>
+                                <th>Check Out Date</th>
+                                <th>Room</th>
+                                <th>Capacity</th>
+                                <th>No of Days</th>
+                                <th>Charge</th>
+                            </tr>    
+                        </thead>
+                        <t t-foreach="hotel_book.room_ids" t-as="booking">
+                            <tr>
+                                <td><t t-out="booking.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
+                                <td><t t-out="booking.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                                <td><span t-field="booking.room_id"/></td>
+                                <td><span t-field="booking.capacity"/></td>
+                                <td><span t-field="booking.days"/></td>  
+                                <td><span t-field="booking.total_price"/></td>   
+                            </tr>
+                        </t>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <th style="float: right;">Total Charge</th>
+                            <td><span t-out="hotel_book.total_amount"/></td>
+                        </tr>
+                    </t>
+                </div>
+            </t>
+        </template>
+        <template id="portal_my_inquiry" name="My Application Status">
+            <t t-call="portal.portal_layout">
+                <t t-set="title">Booking Inquiry</t>
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Booking Inquiry</t>
+                </t>
+                <t t-if="not booking_inquiry">
+                    <p>There are currently no inquiry in your account.</p>
+                </t>
+                <t t-if="booking_inquiry" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Inquiry's Name</th>
+                            <th>Inquiry's Date</th>
+                            <th>Inquiry For</th>
+                            <th>Inquiry State</th>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <t t-foreach="booking_inquiry" t-as="booking">
+                            <tr>
+                                <td><span t-field="booking.name"/></td>
+                                <td><span t-field="booking.arrival_date"/></td>
+                                <td><span t-field="booking.inquiry_for"/></td> 
+                                <td><span t-field="booking.state"/></td>  
+                            </tr>
+                        </t>
+                    </tbody>
+                </t>
+            </t>
+        </template>
+        <template id="portal_my_hall" name="My Hall">
+            <t t-call="portal.portal_layout">
+                <t t-set="title">Hotel Hall</t>
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Hotel Hall</t>
+                </t>
+                <t t-if="not booking_hall">
+                    <p>There are currently no booking in your account.</p>
+                </t>
+                <t t-if="booking_hall" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Booking Name</th>
+                            <th>Booking Event Start Date</th>
+                            <th>Booking Event End Date</th>
+                            <th>Hall</th>
+                            <th>Boooking State</th>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <t t-foreach="booking_hall" t-as="booking">
+                            <tr>
+                                <td><span t-field="booking.customer_id.name"/></td>
+                                <td><span t-field="booking.start_date"/></td>
+                                <td><span t-field="booking.end_date"/></td>
+                                <td><span t-field="booking.hall_id"/></td> 
+                                <td><span t-field="booking.stages"/></td>   
+                            </tr>
+                        </t>
+                    </tbody>
+                </t>
+            </t>
+        </template>
+        <template id="portal_my_rest" name="My Restaurant">
+            <t t-call="portal.portal_layout">
+                <t t-set="title">Hotel Restaurant</t>
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Hotel Restaurant</t>
+                </t>
+                <t t-if="not booking_rest">
+                    <p>There are currently no booking in your account.</p>
+                </t>
+                <t t-if="booking_rest" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Reservation No</th>
+                            <th>Booking Name</th>
+                            <th>Booking Event Start Date</th>
+                            <th>Booking Event End Date</th>
+                            <th>Boooking State</th>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <t t-foreach="booking_rest" t-as="booking">
+                            <tr>
+                                <td><span t-field="booking.reservation_id"/></td>
+                                <td><span t-field="booking.customer_id.name"/></td>
+                                <td><span t-field="booking.start_date"/></td>
+                                <td><span t-field="booking.end_date"/></td> 
+                                <td><span t-field="booking.state"/></td>   
+                            </tr>
+                        </t>
+                    </tbody>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

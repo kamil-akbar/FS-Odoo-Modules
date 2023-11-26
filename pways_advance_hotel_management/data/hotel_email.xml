@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+ 
+        <!-- Default follow up message -->
+        <record id="email_template_hotel_booking" model="mail.template">
+            <field name="name">Room Booking Email</field>
+            <field name="email_from">{{ (user.email or '') }}</field>
+            <field name="subject">{{ user.company_id.name }} Room Booking</field>
+            <field name="email_to">{{ object.email if hasattr(object, 'email') else '' }}</field>
+            <field name="model_id" ref="model_hotel_booking"/>
+            <field name="report_template" ref="pways_advance_hotel_management.booking_details_report_id"/>
+            <field name="report_name">Room Booking</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Dear <t t-out="object.customer_id.name or ''"></t>,
+
+                        I would like to book a room at your hotel
+                        <table class="table">
+                            <tr>
+                                <th>Room No</th>
+                                <th>Check IN</th>
+                                <th>Check OUT</th>
+                            </tr>
+                            <tr>
+                                <t t-foreach="object.room_ids" t-as="room">
+                                    <td><t t-esc="room.room_id.room_no"/></td>
+                                    <td><t t-esc="room.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
+                                    <td><t t-esc="room.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                                </t>
+                            </tr>
+                        </table> 
+                        Please let me know what the best room type and rate would be for that timeframe.
+                    </p>
+                    <br/>
+                    Thank you,
+                    <br/>
+                    <br/>
+                    <t t-out="user.name or ''"></t>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </field>
+        </record> 
+
+        <record id="email_template_hotel_booking_check_out" model="mail.template">
+            <field name="name">Room Check Out Email</field>
+            <field name="email_from">{{ (user.email or '') }}</field>
+            <field name="subject">{{ user.company_id.name }} Room Check Out</field>
+            <field name="email_to">{{ object.email if hasattr(object, 'email') else '' }}</field>
+            <field name="model_id" ref="model_hotel_booking"/>
+            <field name="report_template" ref="pways_advance_hotel_management.booking_details_report_id"/>
+            <field name="report_name">Room Check out</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Dear <t t-out="object.customer_id.name or ''"></t>,
+                        Thank you for choosing  <t t-out="user.company_id.name or ''"></t> as your preferred accommodation during your stay.
+                    </p>
+                    <p>This is your stay details</p>
+                    <table class="table">
+                        <tr>
+                            <th>Room No</th>
+                            <th>Check IN</th>
+                            <th>Check OUT</th>
+                        </tr>
+                        <tr>
+                            <t t-foreach="object.room_ids" t-as="room">
+                                <td><t t-esc="room.room_id.room_no"/></td>
+                                <td><t t-esc="room.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
+                                <td><t t-esc="room.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                            </t>
+                        </tr>
+                    </table>
+                    <p>
+                        Once again, thank you for staying at <t t-out="user.company_id.name or ''"></t> hotel.. We look forward to welcoming you back in the future and providing you with another exceptional experience.
+                    </p>
+                    <br/>
+                    Thank you,
+                    <br/>
+                    <br/>
+                    <t t-out="user.name or ''"></t>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </field>
+        </record>  
+              
+        <record id="email_template_hotel_booking_cancel" model="mail.template">
+            <field name="name">Room Cancellation Email</field>
+            <field name="email_from">{{ (user.email or '') }}</field>
+            <field name="subject">{{ user.company_id.name }} Room Cancellation</field>
+            <field name="email_to">{{ object.email if hasattr(object, 'email') else '' }}</field>
+            <field name="lang">{{ object.customer_id.lang if object.customer_id.lang else '' }}</field>
+            <field name="model_id" ref="model_hotel_booking"/>
+            <field name="report_template" ref="pways_advance_hotel_management.booking_details_report_id"/>
+            <field name="report_name">Room Cancellation</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Dear <t t-out="object.customer_id.name or ''"></t>,
+                     We regret to inform you that we have received your hotel room cancellation request.
+                     <p>This is your room details</p> 
+                     <table class="table">
+                        <tr>
+                            <th>Room No</th>
+                            <th>Check IN</th>
+                            <th>Check OUT</th>
+                        </tr>
+                        <tr>
+                            <t t-foreach="object.room_ids" t-as="room">
+                                <td><t t-esc="room.room_id.room_no"/></td>
+                                <td><t t-esc="room.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
+                                <td><t t-esc="room.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                            </t>
+                        </tr>
+                    </table> 
+                    We have processed the cancellation, and your room booking has been cancelled.
+                    </p>
+                    <br/>
+                    Thank you,
+                    <br/>
+                    <br/>
+                    <t t-out="user.name or ''"></t>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

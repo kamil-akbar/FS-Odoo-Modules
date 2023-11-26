@@ -1,0 +1,19 @@
+
+<odoo>
+    
+     <record id="action_inherit_ivoice" model="ir.actions.act_window">
+        <field name="name">Hotel Analysis</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.invoice.report</field>
+        <field name="view_mode">pivot,tree</field>
+    </record>   
+    
+    <record id="action_inherit_ledger" model="ir.actions.act_window">
+        <field name="name">Hotel Ledger</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">pivot,tree</field>
+    </record> 
+
+</odoo>
+

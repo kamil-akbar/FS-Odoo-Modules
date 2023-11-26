@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hotel_homepage" name="Hotel Homepage">
+        <t t-call="website.layout">
+            <t t-set="title">Hotel Management</t>
+            <div class="hotel_booking_area position">
+                <div class="container mb-5">
+                    <form id="home" action="/data/submit" method="post">
+                        <div class="row hotel_booking_table mt-5">
+                            <div class="col-md-3">
+                                <h2>Create</h2>
+                                <h2>Inquiry</h2>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="boking_table">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="book_tabel_item">
+                                                <div class="form-group">
+                                                    <label for="arrival_date">Arrival Date</label>
+                                                    <div class="input-group date" id="datetimepicker11">
+                                                        <input type="date" class="form-control" placeholder="Arrival Date" id="arrival_date" name="arrival_date" required="required"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="book_tabel_item">
+                                                <div class="form-group">
+                                                    <label for="departure_date">Departure Date</label>
+                                                    <div class="input-group date" id="datetimepicker1">
+                                                        <input type="date" class="form-control" placeholder="Departure Date" id="departure_date" name="departure_date" required="required"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="book_tabel_item">
+                                                <div class="form-group">
+                                                    <label for="departure_date">Type</label>
+                                                    <select class="form-control" name="type" id="type" style="border: 5px solid #9bbfe8;"  required="required">
+                                                        <option>Type</option>
+                                                        <t t-foreach="category" t-as="roomtype">
+                                                            <option t-att-value="roomtype.name">
+                                                                <t t-esc="roomtype.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mt-4">
+                                            <div class="book_tabel_item">
+                                                <button type="submit" class="book_now_btn button_hover ">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="container mt-5">
+                <div class="section_title text-center">
+                    <h2 class="title_color">Hotel Accomodation</h2>
+                    <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
+                </div>
+               <div class="row mb_30">
+                    <t t-foreach="category" t-as="category">
+                        <div class="col-lg-3 d-flex flex-column align-items-center">
+                            <div class="hotel_img">
+                                <img t-if="category.image" t-att-src="'data:category.image/jpeg;base64,' + category.image.decode('utf-8')" style="width: 271px; height: 250px;"/>    
+                            </div>
+                            <a href="#" class="category-link" t-att-data-category="category.name">
+                                <h4 class="sec_h4 d-inline" t-esc="category.name"/>
+                            </a>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="hotel_room" name="Hotel Room">
+        <t t-call="website.layout">
+            <div class="container mb-4">
+                <div class="section_title text-center">
+                    <h2 class="title_color mt-4">Room Inquiry</h2>
+                    <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast</p>
+                </div>
+                <div class="rooms mb_30">
+                    <div class="row">
+                        <t t-foreach="room" t-as="room_name">
+                            <div class="room_type text-center mb-4 row" style="text-align: center;">
+                                <div class="col">
+                                    <div class="hotel_img">
+                                        <img t-if="room_name.image" t-att-src="'data:image/jpeg;base64,' + room_name.image.decode('utf-8')" style="width: 571px; height: 250px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);"/>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="details mt-3">
+                                        <a href="#">
+                                            <h4 style="text-align: left; font-size: 35px; margin-bottom: 10px; margin-left: 15px;">
+                                                <t t-esc="room_name.name"/>
+                                            </h4>
+                                        </a>
+                                        <div class="features">
+                                            <t t-foreach="room_name.room_facilities_ids" t-as="fac">
+                                                <div class="feature" style="display: flex; align-items: center;">
+                                                    <i class="fa fa-star" style="font-size: 20px; color: #FFD700; margin-right: 5px;"></i>
+                                                    <span style="font-size: 16px; color: #555;">
+                                                        <t t-esc="fac.name"/>
+                                                    </span>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="hotel_booking_table">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="boking_table">
+                                <div class="row">
+                                    <h2 style="text-align: center;" class="mb-2">Make Your Booking</h2>
+                                </div>
+                                <form id="room_book" action="/room/book" method="post">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="book_tabel_item">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Name" id="name" name="name" required="required"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <div class="input-group">
+                                                    <input type="email" class="form-control" placeholder="Email" id="email" name="email" required="required"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="book_tabel_item">
+                                            <div class="form-group">
+                                                <label for="phone">Phone</label>
+                                                <div class="input-group mb-4">
+                                                    <input type="tel" class="form-control" placeholder="Phone" id="phone" name="phone" required="required"/>
+                                                </div>
+                                            </div>
+                                           <div class="form-group">
+                                                <label for="type">Type</label>
+                                                <div class="input-group">
+                                                    <select class="form-control" name="type" id="type" required="required" t-att-value="type">
+                                                        <option value="">Type</option>
+                                                        <t t-foreach="room" t-as="roomtype">
+                                                            <t t-if="type == roomtype.name">
+                                                                <option t-att-value="roomtype.name" selected="selected">
+                                                                    <t t-esc="roomtype.name"/>
+                                                                </option>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <option t-att-value="roomtype.name">
+                                                                    <t t-esc="roomtype.name"/>
+                                                                </option>
+                                                            </t>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="book_tabel_item">
+                                            <div class="form-group">
+                                                <label for="arrival_date">Arrival Date</label>
+                                                <div class="input-group date" id="datetimepicker11">
+                                                    <input type="date" class="form-control" placeholder="Arrival Date" id="arrival_date" name="arrival_date" required="required" style="width: 100%;" t-att-value="check_in" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="departure_date">Departure Date</label>
+                                                <div class="input-group date" id="datetimepicker1">
+                                                    <input type="date" class="form-control" placeholder="Departure Date" id="departure_date" name="departure_date" required="required" style="width: 100%;" t-att-value="check_out" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="book_tabel_item">
+                                            <div class="form-group mb-4">
+                                                <label for="adult">Adult</label>
+                                                <div class="input-group">
+                                                    <input type="number" id="adult" name="adult" class="form-control" placeholder="Adult"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="child">Child</label>
+                                                <div class="input-group">
+                                                    <input type="number" id="child" name="child" class="form-control" placeholder="Child"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="book_tabel_item">
+                                            <div class="form-group mb-4">
+                                                <label for="num_rooms">Number of Rooms</label>
+                                                <div class="input-group">
+                                                    <input type="number" id="num_rooms" name="num_rooms" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-5">
+                                                <button type="submit" class="book_now_btn button_hover">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="hotel_restaurant_template" name="Hotel Restaurant">
+        <t t-call="website.layout">
+            <div class="container mb-4">
+                <div class="section_title text-center">
+                    <h2 class="title_color mt-4">Restaurant Available</h2>
+                    <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
+                </div>
+                <div class="row mb_30">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="accomodation_item text-center">
+                            <div class="hotel_img">
+                                <t t-foreach="image" t-as="image">
+                                    <img t-if="image.rest_image1" t-att-src="'data:image/jpeg;base64,' + image.rest_image1.decode('utf-8')" style="width: 271px; height: 250px;"/>
+                                </t>
+                            </div>
+                            <a href="#"><h4 class="sec_h4">Party</h4></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="accomodation_item text-center">
+                            <div class="hotel_img">
+                                 <t t-foreach="image" t-as="image">
+                                    <img t-if="image.rest_image2" t-att-src="'data:image/jpeg;base64,' + image.rest_image2.decode('utf-8')" style="width: 271px; height: 250px;"/>
+                                </t>
+                            </div>
+                            <a href="#"><h4 class="sec_h4">Buffet</h4></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="accomodation_item text-center">
+                            <div class="hotel_img">
+                                 <t t-foreach="image" t-as="image">
+                                    <img t-if="image.rest_image3" t-att-src="'data:image/jpeg;base64,' + image.rest_image3.decode('utf-8')" style="width: 271px; height: 250px;"/>
+                                </t>
+                            </div>
+                            <a href="#hotel_booking_table"><h4 class="sec_h4">Diner</h4></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel_booking_table" id="hotel_booking_table">
+                    <div class="boking_table">
+                        <div class="row">
+                            <h2 style="text-align: center;" class="mb-2">Check Restaurant Availability</h2>
+                        </div>
+                        <form id="restaurant" action="/rest/submit" method="post">
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    
+                                    <div class="book_tabel_item">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <div class='input-group'>
+                                                <input type="text" class="form-control" placeholder="Name" id="name" name="name" required="required"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <div class='input-group'>
+                                                <input type="email" class="form-control" placeholder="Email" id="email" name="email" required="required"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-4">
+                                    <div class="book_tabel_item">
+                                        <div class="form-group">
+                                            <label for="phone">Phone</label>
+                                            <div class="input-group mb-4">
+                                                <input type="tel" class="form-control" placeholder="Phone" id="phone" name="phone" required="required"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="person">Person</label>
+                                            <div class='input-group'>
+                                                <input type="text" class="form-control" placeholder="Person" id="person" name="person" required="required"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-4">
+                                    <div class="book_tabel_item">
+                                        <div class="form-group">
+                                            <label for="booking_date">Booking Date</label>
+                                            <div class='input-group date' id='datetimepicker11'>
+                                                <input type='date' class="form-control" placeholder="Booking Date" id="booking_date" name="booking_date" required="required" t-att-value="check_in"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="booking_time">Duration</label>
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input type='number' class="form-control" placeholder="Duration" id="booking_time" name="booking_time" required="required"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="book_tabel_item">
+                                    <button type="submit" class="book_now_btn button_hover">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="hotel_hall" name="Hotel Hall">
+        <t t-call="website.layout">
+            <div class="container mb-4">
+                <div class="hotel_img1 mt-5">
+                    <t t-foreach="image" t-as="image">
+                        <img t-if="image.hall_image" t-att-src="'data:image/jpeg;base64,' + image.hall_image.decode('utf-8')" style="width: 1300px; height: 500px;"/>
+                    </t>
+                </div>
+                <div class="hotel_booking_table mt-4 mb-4" id="hotel_booking_table">
+                    <div class="boking_table">
+                        <form id="hotel_hall_form" action="/hall/submit" method="post">
+                            <div class="row">
+                                <h2 style="text-align: center;" class="mb-2">Banquet Inquiry</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <div class="book_tabel_item">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <div class='input-group'>
+                                                <input type="text" class="form-control" placeholder="Name" id="name" name="name" required="required"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <div class='input-group'>
+                                                <input type="email" class="form-control" placeholder="Email" id="email" name="email" required="required"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-4">
+                                    <div class="book_tabel_item">
+                                        <div class="form-group">
+                                            <label for="phone">Phone</label>
+                                            <div class="input-group mb-4">
+                                                <input type="tel" class="form-control" placeholder="Phone" id="phone" name="phone" required="required"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="person">Hall</label>
+                                            <div class='input-group'>
+                                                <select class="form-control" name="hall" id="hall" required="required">
+                                                    <option>Select Hall According The Person</option>
+                                                    <t t-foreach="hall" t-as="hallcap">
+                                                        <option t-att-value="hallcap.capacity">
+                                                            <t t-esc="hallcap.capacity"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-4">
+                                    <div class="book_tabel_item">
+                                        <div class="form-group">
+                                            <label for="booking_date">Booking Date</label>
+                                            <div class='input-group date' id='datetimepicker11'>
+                                                <input type='date' class="form-control" placeholder="Booking Date" id="booking_date" name="booking_date" required="required" t-att-value="check_in"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="booking_time">Duration</label>
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input type='number' class="form-control" placeholder="Duration" id="booking_time" name="booking_time" required="required"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="book_tabel_item">
+                                    <button type="submit" class="book_now_btn button_hover">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="thankyou_page" name="Thankyou Page">
+        <t t-call="website.layout">
+            <div class="container" style="text-align: center; padding-top: 50px;">
+                <h2 style="font-family: Arial, sans-serif;">Thank you for booking</h2>
+                <p style="font-family: Arial, sans-serif;">The Administration will contact you shortly.</p>
+            </div>
+        </t>
+    </template>
+    
+    <template id="website_sale.products_breadcrumb" name="Products Breadcrumb">
+        <ol t-if="category" t-attf-class="breadcrumb #{_classes}">
+            <li class="breadcrumb-item">
+                <a href="/shop">Rooms</a>
+            </li>
+            <t t-foreach="category.parents_and_self" t-as="cat">
+                <li t-if="cat == category" class="breadcrumb-item">
+                    <span class="d-inline-block" t-field="cat.name"/>
+                </li>
+                <li t-else="" class="breadcrumb-item">
+                    <a t-att-href="keep('/shop/category/%s' % slug(cat), category=0)" t-field="cat.name"/>
+                </li>
+            </t>
+        </ol>
+    </template>
+
+    <template id="custom_room_all" name="Custom Product Template" inherit_id="website_sale.product">
+        <xpath expr="//li[@class='breadcrumb-item o_not_editable']//a" position="replace">
+            <a t-att-href="keep(category=0)">All Rooms</a>
+        </xpath>
+    </template>
+
+    <template id="room_availibity" inherit_id="website_sale.products">
+        <xpath expr="//div[hasclass('o_wsale_products_main_row')]" position="before">
+            <div class="row" id="room_availibity" style="margin-top: 70px; margin-bottom: 120px; border-radius: 55px; border: 1px solid #ccc;">
+                <div class="col-md-2 mx-auto">
+                    <label for="check_in_date" class="form-label" style="margin-left: 40px; margin-top: 5px;">Check In</label>
+                    <input type="date" id="checkin" class="form-control" placeholder="Checkin Date" style="margin-bottom: 10px; border: none; border-radius: 4px;" />
+                </div>
+                <div class="col-md-2 mx-auto">
+                    <label for="check_out_date" class="form-label" style="margin-left: 40px; margin-top: 5px;">Check Out</label>
+                    <input type="date" id="checkout" class="form-control" placeholder="Checkout Date" style="margin-bottom: 10px; border: none; border-radius: 4px;" />
+                </div>
+                <div class="col-md-1 mt-4" style="margin-bottom: 0px;">
+                    <button type="submit" class="btn btn-primary" id="available_check" style="border-radius: 50%;"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="room_product_website" inherit_id="website_sale.products_item" name="Room Product Website">
+        <xpath expr="//*[hasclass('o_wsale_products_item_title')]" position="after">
+            <t t-if="product.room">
+                <label id="available" style="background-color: #FF5733; color: #FFF; border-radius: 9px; padding: 5px; display: inline-block; font-size: 10px;">
+                    <span t-esc="product.current_available_room" style="margin: 0;"></span> Available
+                </label>
+                <label>Adults: <span t-esc="product.adults"/></label>
+                <label>Child: <span t-esc="product.child"/> </label>
+            </t>
+            <t t-if="product.hall">
+                <label>Capacity:<span t-esc="product.hall_capacity"/></label>
+            </t>
+        </xpath> 
+    </template>
+    <template id="product_room_details" inherit_id="website_sale.product" name="Product Room Details">
+        <xpath expr="//div[@id='o_wsale_cta_wrapper']" position="before">
+            <t t-if="product.room">
+                <div>
+                    <label for="arrival_date">Arrival Date:</label>
+                    <input type="date" id="arrival_date" name="arrival_date" class="form-control" t-att-value="check_in"/>
+                </div>
+                <div>
+                    <label for="departure_date">Departure Date:</label>
+                    <input type="date" id="departure_date" name="departure_date" class="form-control mb-5"
+                        t-att-value='checkout'/>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[@id='o_wsale_cta_wrapper']" position="after">
+            <t t-if="product.room">
+                <p style="font-size: 10px;">AMENTIES</p>
+                <h4>Room</h4>
+                <h4>Amenties</h4>
+                <ul style="list-style-type: none;">
+                    <t t-foreach="product.room_facilities_ids" t-as="facilitiy">
+                        <li><i class="fa fa-check-circle mb-3" style="font-size:20px">  <span t-esc="facilitiy.name"/></i></li>
+                    </t>
+                </ul>
+            </t>
+            <t t-if="product.hall">
+                <p style="font-size: 10px;">AMENTIES</p>
+                <h4>Hall</h4>
+                <h4>Amenties</h4>
+                <ul style="list-style-type: none;">
+                    <t t-foreach="product.hall_facilities_ids" t-as="facilitiy">
+                        <li><i class="fa fa-check-circle mb-3" style="font-size:20px">  <span t-esc="facilitiy.name"/></i></li>
+                    </t>
+                </ul>
+            </t>
+
+        </xpath>
+        <xpath expr="//div[@id='product_detail_main']" position="inside">
+            <t t-if="product.room">
+                <t t-out="product.room_desc"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="terms_and_condition_room" inherit_id="website_sale.payment">
+         <xpath expr="//div[@id='address_on_payment']" position="after">
+            <ul>
+                <li>Hotel Standard Check-in time is 1400 hours IST and check-out time is 1200 hours</li>
+                <li>Early check-in and late check-out are available on subject to availability.</li>
+                <li>Individual Cancellation, No-Show and Amendment Policy: Cancellation made 3 days prior to the arrival date shall not incur any cancellation charges ‘beyond 1-night retention charges’ will be applicable.</li>
+                <li>Group Cancellation (5 rooms and above): Group cancellation made 25 days prior to the arrival date shall incur cancellation charges ‘beyond 100% will be charged through length of stay</li>
+                <li>All standard policies pertaining to hotel/ hospitality industry are applicable, when specific reservation policy is not mentioned in the “Reservation Confirmation” document.</li>
+            </ul>
+            <div class="d-flex">
+                <input type="checkbox" id="agree_terms" name="agree_terms"/>
+                <label for="agree_terms" style="margin-left: 10px;">I agree to the Terms and Conditions:</label>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='oe_structure_website_sale_payment_2']" position="after">
+            <div role="dialog" class="modal fade" t-attf-id="modeleditpurchase{{website_sale_order.id}}">
+                <div class="modal-dialog">
+                    <form id="confirm" method="POST"  class="modal-content">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <header class="modal-header">
+                            <h4 class="modal-title">REVIEW YOUR BOOKING</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&amp;times;</button>
+                        </header>
+                        <main class="modal-body">
+                            <table  class="table table-striped"> 
+                                <t t-foreach="website_sale_order.website_order_line" t-as="line">  
+                                    <tr>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Nights</th>
+                                    </tr>
+                                    <tr>
+                                        <td><span t-esc="line.checkin_date.strftime('%Y-%m-%d 02:00 PM')"/></td>
+                                        <td><span t-esc="line.checkout_date.strftime('%Y-%m-%d 11:00 PM')"/></td>
+                                        <td><span t-esc="line.number_of_days"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Room Details</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Rooms</td>
+                                        <td colspan="2"><span t-esc="line.product_template_id.name"/> <i class="fa fa-user" style="font-size:16px"></i>  +  <t t-esc="line.product_template_id.adults"/> Adults , <t t-esc="line.product_template_id.child"/> Child</td>
+                                    </tr>
+                                </t> 
+                                <tr>
+                                    <th colspan="2">Total Price</th>
+                                    <td><span t-esc="website_sale_order.amount_total"/></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Total Payable Now</th>
+                                    <td><span t-esc="website_sale_order.amount_total"/></td>
+                                </tr>
+                            </table>
+                        </main>
+                        <footer class="modal-footer">
+                            <button type="submit" id="pay_now" class="btn btn-success" ><i class="fa fa-check"></i>Pay Now</button>
+                            <button type="button" class="btn btn-success" aria-label="Close" data-bs-dismiss="modal">Close</button>
+                        </footer>
+                    </form>
+                </div>   
+            </div>
+        </xpath>
+
+    </template>
+    <template id="payment_review" inherit_id="website_sale.payment_footer">
+        <xpath expr="//button[@name='o_payment_submit_button']/parent::div" position="after">
+            <div class="float-end mt-2">
+                <a role="button" class="btn btn-secondary" id="modal_button" data-bs-toggle="modal" 
+                style="padding: 10px; border: none; margin-right: 10px;"
+                t-attf-data-bs-target="#modeleditpurchase{{website_sale_order.id}}" href="#" 
+                t-attf-aria-controls="modeleditpurchase{{website_sale_order.id}}">Review Your Booking</a>              
+            </div>
+        </xpath>
+    </template>
+</odoo>

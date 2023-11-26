@@ -1,0 +1,431 @@
+<odoo>    
+    <record id="view_hotel_restaurant_reservation_form" model="ir.ui.view">
+        <field name="name">hotel_restaurant_reservation.form</field>
+        <field name="model">hotel.restaurant.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Table Reservation">
+                <header>
+                    <button
+                        string="Confirm"
+                        name="table_reserved"
+                        states="draft"
+                        type="object"
+                    />
+                    <button
+                        string="Done"
+                        name="table_done"
+                        states="confirm"
+                        type="object"
+                    />
+                    <button
+                        string="Cancel"
+                        name="table_cancel"
+                        states="confirm"
+                        type="object"
+                    />
+                    <button
+                        string="Set to Draft"
+                        name="action_set_to_draft"
+                        states="cancel"
+                        type="object"
+                    />
+                    <button
+                        string="Create Order"
+                        name="create_order"
+                        type="object"
+                        states="done"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,confirm,done"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('order_count', '=', 0)]}">
+                            <field name="order_count" widget="statinfo" string="Order"/>
+                        </button>
+                    </div>
+                    <h1>
+                      <!--   <label for="table_booking" string="Table Booking" colspan="4"/> -->
+                        <field name="reservation_id" colspan="4" />
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="is_folio" />
+                            <field
+                                name="booking_id"
+                                attrs="{'invisible':[('is_folio','=',False)], 'required':[('is_folio','=',True)]}"
+                            />
+                            <field
+                                name="room_id"
+                                attrs="{'invisible':[('is_folio','=',False)] ,'required':[('is_folio','=',True)]}"
+                            />
+                            <field name="customer_id" />
+                        </group>
+                        <group>
+                            <field name="start_date" />
+                            <field name="end_date" />
+                        </group>
+                        <group colspan="4">
+                            <separator  string="Table Details" />
+                            <field name="table_nos_ids" colspan="2" nolabel='1'/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view of hotel restaurant reservation -->
+    <record id="view_hotel_restaurant_reservation_tree" model="ir.ui.view">
+        <field name="name">hotel_restaurant_reservation.tree</field>
+        <field name="model">hotel.restaurant.reservation</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-success="state=='confirm'"
+                decoration-info="state=='draft'"
+                decoration-danger="state=='cancel'"
+                decoration-muted="state=='done'"
+            >
+                <field name="reservation_id" />
+                <field name="booking_id" />
+                <field name="room_id" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="customer_id" />
+                <field name="partner_address_id" />
+                <field name="table_nos_ids" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search view of hotel restaurant reservation -->
+    <record id="view_hotel_restaurant_reservation_search" model="ir.ui.view">
+        <field name="name">hotel.restaurant.reservation.search</field>
+        <field name="model">hotel.restaurant.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Restaurant Reservation">
+                <filter
+                    domain="[('state','in',('confirm','done','order')),('start_date','&lt;=',datetime.datetime.now()),('end_date','&gt;',datetime.datetime.now())]"
+                    string="Current Booking"
+                    name="current_booking"
+                />
+                <separator />
+                <filter
+                    name="today"
+                    domain="[('start_date','&gt;=',datetime.datetime.now().replace(hour=0, minute=0, second=0)),('end_date','&lt;=',datetime.datetime.now().replace(hour=23, minute=59, second=59))]"
+                    string="Today's Booking"
+                />
+                <separator />
+                <group string="States">
+                    <filter
+                        icon="terp-check"
+                        domain="[('state','=','draft')]"
+                        string="Draft"
+                        name="draft"
+                    />
+                    <filter
+                        domain="[('state','=','confirm')]"
+                        string="Confirm"
+                        name="confirm"
+                    />
+                    <filter
+                        domain="[('state','=','cancel')]"
+                        string="Cancel"
+                        name="cancel"
+                    />
+                    <filter domain="[('state','=','done')]" string="Done" name="done" />
+                </group>
+                <field name="room_id" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="customer_id" />
+                <newline />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="room_id"
+                        string="Room Number"
+                        icon="terp-personal"
+                        domain="[]"
+                        context="{'group_by':'room_id'}"
+                    />
+                    <filter
+                        name="customer_id"
+                        string="Customer Name"
+                        domain="[]"
+                        context="{'group_by':'customer_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action of hotel restaurant reservation -->
+    <record id="open_view_hotel_restaurant_reservation_form_tree" model="ir.actions.act_window">
+        <field name="name">Table Booking</field>
+        <field name="res_model">hotel.restaurant.reservation</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hotel_restaurant_reservation_tree" />
+    </record>
+
+ 
+<!-- order tickets -->
+
+    <record id="view_hotel_restaurant_kitchen_order_tickets_form" model="ir.ui.view">
+        <field name="name">hotel_restaurant_kitchen_order_tickets.form</field>
+        <field name="model">hotel.restaurant.kitchen.order.tickets</field>
+        <field name="arch" type="xml">
+            <form string="KOT List" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_ids" />
+                            <field name="order_number" />
+                            <field name="reservation_number" />
+                            <field name="kot_date" />
+                        </group>
+                        <group>
+                            <field name="room_no" />
+                            <field name="waiter_name" />
+                        </group>
+                        <newline />
+                        <separator colspan='4' string='Table Details' />
+                        <field name="table_nos_ids" colspan="4" nolabel='1' />
+                        <newline />
+                        <separator colspan='4' string='Food Order List' />
+                        <field name="kot_list_ids" colspan="4" nolabel='1'>
+                            <form string="Food Order List">
+                                <group>
+                                    <field name="menucard_id" />
+                                    <field name="item_qty" />
+                                    <field name="item_rate" />
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="menucard_id" />
+                                <field name="item_qty" />
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view of hotel restaurant kitchen order tickets -->
+    <record id="view_hotel_restaurant_kitchen_order_tickets_tree" model="ir.ui.view">
+        <field name="name">hotel_restaurant_kitchen_order_tickets.tree</field>
+        <field name="model">hotel.restaurant.kitchen.order.tickets</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="order_ids" />
+                <field name="reservation_number" />
+                <field name="kot_date" />
+                <field name="room_no" />
+                <field name="waiter_name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search view of hotel restaurant kitchen order tickets -->
+    <record id="view_hotel_restaurant_kitchen_order_search" model="ir.ui.view">
+        <field name="name">hotel.restaurant.kitchen.order.tickets.search
+        </field>
+        <field name="model">hotel.restaurant.kitchen.order.tickets</field>
+        <field name="arch" type="xml">
+            <search string="Restaurant kitchen Order">
+                <filter
+                    name="today"
+                    domain="[('kot_date','&gt;=',datetime.datetime.now().replace(hour=0, minute=0, second=0)),('kot_date','&lt;=',datetime.datetime.now().replace(hour=23, minute=59, second=59))]"
+                    string="Today's Orders"
+                />
+                <field name="order_ids" />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="waiter_name"
+                        string="Waiter Name"
+                        icon="terp-personal"
+                        domain="[]"
+                        context="{'group_by':'waiter_name'}"
+                    />
+                    <filter
+                        name="kot_date"
+                        string="Date"
+                        domain="[]"
+                        context="{'group_by':'kot_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action of hotel restaurant kitchen order tickets -->
+    <record
+        id="open_view_hotel_restaurant_kitchen_order_tickets_form_tree"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Kitchen Order Tickets</field>
+        <field name="res_model">hotel.restaurant.kitchen.order.tickets</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!-- order table -->
+
+    <record id="view_hotel_reservation_order_form" model="ir.ui.view">
+        <field name="name">hotel_reservation_order.form</field>
+        <field name="model">hotel.reservation.order</field>
+        <field name="arch" type="xml">
+            <form string="Order">
+                <header>
+                    <button
+                        string="Generate KOT"
+                        name="reservation_generate_kot"
+                        type="object"
+                        states="draft"
+
+                    />
+                    <button
+                        string="Update KOT"
+                        name="reservation_update_kot"
+                        type="object"
+                        states="invoice,order"
+                    />
+                    <button
+                        string="Create Invoice"
+                        name="action_invoice"
+                        type="object"
+                        states="invoice,order"
+                    />
+                    <button
+                        string="Done"
+                        name="done_kot"
+                        type="object"
+                        states="invoice,order"
+                    />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        <button name="action_open_tickets" type="object" class="oe_stat_button" icon="fa-square-o" attrs="{'invisible': [('tickets_count', '=', 0)]}">
+                            <field name="tickets_count" widget="statinfo" string="KOT"/>
+                        </button>
+                    </div>
+
+                    <h1>
+                        <field name="order_number" colspan="4" />
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="is_folio" />
+                            <field name="reservation_id" />
+                            <field
+                                name="booking_id"
+                                attrs="{'invisible': [('is_folio','=',False)]}"
+                            />
+                        </group>
+                        <group>
+                            <field name="order_date" />
+                            <field name="waitername" />
+                            <field name="kitchen" invisible="1" />
+                            <field
+                                name="rests_ids"
+                                widget="many2many_tags"
+                                invisible="1"
+                            />
+                        </group>
+                        <newline />
+                        <separator colspan='4' string='Table Booking' />
+                        <field name="table_nos_ids" colspan="4" nolabel='1' />
+                        <newline />
+                        <separator colspan='4' string='Order List' />
+                        <field name="order_list_ids" colspan="4" nolabel='1'>
+                            <tree editable="bottom">
+                                <field name="menucard_id" />
+                                <field name="item_qty" />
+                                <field name="item_rate" />
+                                <field name="price_subtotal" />
+                                <field name="current"/>
+                                <field name="kot"/>
+                            </tree>
+                        </field>
+                        <newline />
+                        <group colspan="2" class="oe_subtotal_footer oe_right">
+                            <div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="amount_total" />
+                            </div>
+                            <field name="amount_total" nolabel="1" widget='monetary' />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view of hotel reservation order -->
+    <record id="view_hotel_reservation_order_tree" model="ir.ui.view">
+        <field name="name">hotel_reservation_order.tree</field>
+        <field name="model">hotel.reservation.order</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-success="state=='order'"
+                decoration-info="state=='draft'"
+                decoration-muted="state=='done'"
+            >
+                <field name="order_number" />
+                <field name="reservation_id" />
+                <field name="order_date" />
+                <field name="waitername" />
+                <field name="table_nos_ids" />
+                <field name="state" />
+                <field name="amount_total" sum="Order Total" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search view of hotel reservation order -->
+    <record id="view_hotel_reservation_order_search" model="ir.ui.view">
+        <field name="name">hotel.reservation.order.search</field>
+        <field name="model">hotel.reservation.order</field>
+        <field name="arch" type="xml">
+            <search string="Reservation Order">
+                <filter
+                    name="today"
+                    domain="[('order_date','&gt;=',datetime.datetime.now().replace(hour=0, minute=0, second=0)),('order_date','&lt;=',datetime.datetime.now().replace(hour=23, minute=59, second=59))]"
+                    string="Today's Orders"
+                />
+                <field name="reservation_id" />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="waitername"
+                        string="Waiter Name"
+                        icon="terp-personal"
+                        domain="[]"
+                        context="{'group_by':'waitername'}"
+                    />
+                    <filter
+                        name="order_date"
+                        string="Date"
+                        domain="[]"
+                        context="{'group_by':'order_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action of hotel reservation order -->
+    <record id="open_view_hotel_reservation_order_form_tree" model="ir.actions.act_window">
+        <field name="name">Order</field>
+        <field name="res_model">hotel.reservation.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

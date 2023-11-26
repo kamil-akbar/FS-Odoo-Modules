@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_transport_form_view" model="ir.ui.view">
+        <field name="name">hotel.transport.form.view</field>
+        <field name="model">hotel.transport</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <header>
+                    <field name="stage" widget="statusbar" nolabel="1"/>
+                    <button name="action_complete" type="object"
+                            string="Complete Ride"
+                            attrs="{'invisible':[('stage','!=','pending')]}"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel Ride"
+                            attrs="{'invisible':[('stage','!=','pending')]}"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="transport_number"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="booking_id" string="Booking Number" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="customer_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Transport Details">
+                            <field name="transport_type" widget="radio" options="{'horizontal': true}"/>
+                            <field name="driver_id"/>
+                            <field name="time"/>
+                            <span class="o_form_label o_td_label" name="address_name">
+                                <b>Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="location" placeholder="Location..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                            </div>
+                        </group>
+                        <group string="Vehicle Details">
+                            <field name="transport_mode_id"/>
+                            <field name="km"/>
+                            <field name="currency_id" invisible="1"/>
+                            <label for="charges" class="mt-1" string="Charge"/>
+                            <div name="charge">
+                                <field name="charges" class="oe_inline"/>
+                                Per KM
+                            </div>
+                            <field name="total_charges" string="Total Charges"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_transport_calendar_view" model="ir.ui.view">
+        <field name="name">hotel.transport.calendar.view</field>
+        <field name="model">hotel.transport</field>
+        <field name="arch" type="xml">
+            <calendar date_start="time" mode="month" quick_add="False"
+                      hide_time="True" event_open_popup="True" color="booking_id">
+                <field name="booking_id"/>
+                <field name="customer_id"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="hotel_transport_search_view" model="ir.ui.view">
+        <field name="name">hotel.transport.search.view</field>
+        <field name="model">hotel.transport</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="transport_number"/>
+                <field name="booking_id"/>
+                <field name="customer_id"/>
+                <field name="create_date"/>
+                <field name="transport_mode_id"/>
+                <field name="transport_type"/>
+                <field name="driver_id"/>
+                <field name="city"/>
+                <group string="Group By">
+                    <filter name="create_date" string="Crate Date "
+                            context="{'group_by':'create_date' }"
+                    />
+                    <filter name="transport_mode_id" string="Transport Mode"
+                            context="{'group_by':'transport_mode_id' }"
+                    />
+                    <filter name="transport_type" string="Transport Types"
+                            context="{'group_by':'transport_type' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_transport_tree_view" model="ir.ui.view">
+        <field name="name">hotel.transport.tree.view</field>
+        <field name="model">hotel.transport</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="transport_number"/>
+                <field name="booking_id" string="Booking Number"/>
+                <field name="customer_id"/>
+                <field name="create_date"/>
+                <field name="transport_type"/>
+                <field name="time"/>
+                <field name="transport_mode_id"/>
+                <field name="driver_id"/>
+                <field name="charges"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_transport_action" model="ir.actions.act_window">
+        <field name="name">Transports Details</field>
+        <field name="res_model">hotel.transport</field>
+        <field name="view_mode">tree,form,calendar,activity</field>
+    </record>
+
+</odoo>

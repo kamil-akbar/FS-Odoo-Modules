@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!-- Define the view for the HotelImage model -->
+        <record id="view_hotel_image_form" model="ir.ui.view">
+            <field name="name">hotel.image.form</field>
+            <field name="model">hotel.image</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="hall_image" widget="image" string="Hotel Hall Image"/>
+                                <field name="rest_image" widget="image" string="Hotel Restaurant Homepage Image"/>
+                                <field name="room_image" widget="image" string="Hotel Room Image"/>
+                            </group>
+                            <group>
+                                <field name="rest_image1" widget="image" string="Hotel Restaurant Image 1"/>
+                                <field name="rest_image2" widget="image" string="Hotel Restaurant Image 2"/>
+                                <field name="rest_image3" widget="image" string="Hotel Restaurant Image 3"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hotel_image_tree" model="ir.ui.view">
+            <field name="name">hotel.image.tree.view</field>
+            <field name="model">hotel.image</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hotel_image" model="ir.actions.act_window">
+            <field name="name">Hotel Images</field>
+            <field name="res_model">hotel.image</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_hotel_image" name="Hotel Images" parent="hotel_image" action="action_hotel_image"/>
+    </data>
+</odoo>

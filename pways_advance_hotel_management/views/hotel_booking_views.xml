@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_booking_form_view" model="ir.ui.view">
+        <field name="name">hotel.booking.form.view</field>
+        <field name="model">hotel.booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="id" invisible="1"/>
+                    <field name="stages" widget="statusbar" statusbar_visible="Draft,Confirm,Complete,check_in"/>
+                    <button name="action_draft" type="object" string="Draft" attrs="{'invisible':[('stages','!=','Complete')]}"/>
+                    <button string="Confirm" name="draft_to_confirm" type="object" attrs="{'invisible': ['|',('stages', 'not in', ['Draft']),('id','=',False)]}"/>
+                    <button name="%(room_change_action)d" type="action" string="Room Change" context="{'default_booking_id':active_id}" attrs="{'invisible':[('stages','in',['Cancel','Draft','Complete'])]}"/>
+                    <button string="Check-in" name="action_check_in" type="object" attrs="{'invisible': [('stages', 'in', ['Draft','Complete','Cancel','check_in'])]}"/>
+                    <button string="Draft Invoice" name="action_draft_invoice" type="object" attrs="{'invisible': [('invoice_payment_type', '=', 'once')]}"/>
+                    <button string="Check-out" name="%(booking_invoice_action)d" type="action" context="{'default_booking_id':active_id}" attrs="{'invisible': [('stages', '!=', 'check_in')]}"/>
+                    <button string="Cancel" name="%(room_cancellation_action)d" type="action" attrs="{'invisible': [('stages', 'in', ['Complete','Cancel'])]}" context="{'default_booking_id':active_id}"/>
+                    <button name="%(pways_advance_hotel_management.action_booking_payment_wizard)d" string="Advance Payment" 
+                            context="{'default_booking_id': active_id}" type="action"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="booking_number" string="Customer"/>
+                        <field name="id" invisible="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                        </group>
+                        <group>
+                            <field name="responsible" widget="many2one_responsible"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Room Details">
+                            <field name="no_of_room"/>
+                            <field name="adults"/>
+                            <field name="children"/>
+                        </group>
+                        <group string="Amount Details">
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <label for="invoice_id" class="mt-1" attrs="{'invisible':[('invoice_id','=',False)]}"/>
+                            <div name="invoice_id">
+                                <field name="invoice_id" readonly="1" class="oe_inline" force_save="1"
+                                       style="width:65%;"
+                                       attrs="{'invisible':[('invoice_id','=',False)]}"/>
+                                <field name="payment_state" attrs="{'invisible':[('invoice_id','=',False)]}"
+                                       widget="badge" style="margin-left: 10px;width:35%;"
+                                       decoration-success="payment_state=='paid'"
+                                       decoration-danger="payment_state=='not_paid'"
+                                       decoration-info="payment_state=='in_payment'"
+                                       decoration-primary="payment_state=='partial'"
+                                       decoration-warning="payment_state=='reversed'"/>
+                            </div>
+                            <label for="agent_bill_id" class="mt-1"
+                                   attrs="{'invisible':[('agent_bill_id','=',False)]}"/>
+                            <div name="agent_bill_id">
+                                <field name="agent_bill_id" readonly="1" class="oe_inline" force_save="1"
+                                       attrs="{'invisible':[('agent_bill_id','=',False)]}" style="width:65%;"/>
+                                <field name="agent_payment_state" attrs="{'invisible':[('agent_bill_id','=',False)]}"
+                                       widget="badge" style="margin-left: 10px;width:35%;"
+                                       decoration-success="agent_payment_state=='paid'"
+                                       decoration-danger="agent_payment_state=='not_paid'"
+                                       decoration-info="agent_payment_state=='in_payment'"
+                                       decoration-primary="agent_payment_state=='partial'"
+                                       decoration-warning="agent_payment_state=='reversed'"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group string="Food Included">
+                        <group>
+                            <field name="is_breakfast_included" widget="boolean_toggle"/>
+                            <field name="is_lunch_included" widget="boolean_toggle"/>
+                            <field name="is_dinner_included" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="breakfast_charge"
+                                   attrs="{'invisible':[('is_breakfast_included','=',False)],'required':[('is_breakfast_included','=',True)]}"/>
+                            <field name="lunch_charge"
+                                   attrs="{'invisible':[('is_lunch_included','=',False)],'required':[('is_lunch_included','=',True)]}"/>
+                            <field name="dinner_charge"
+                                   attrs="{'invisible':[('is_dinner_included','=',False)],'required':[('is_dinner_included','=',True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="is_advance" widget="boolean_toggle"/>
+                        </group>
+                        <group attrs="{'invisible': [('is_advance', '=', False)]}">
+                            <group>
+                                <field name="journal_id" attrs="{'required':[('is_advance','=',True)]}"/>
+                                <field name="advance_amount"
+                                       attrs="{'required':[('is_advance','=',True)],'readonly':[('stages','in',['Confirm','check_in','Complete'])]}"/>
+                            </group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Rooms">
+                            <group>
+                                <group>
+                                    <field name="invoice_payment_type" widget="radio" options="{'horizontal':True}"
+                                           invisible="0"/>
+                                </group>
+                            </group>
+                            <field name="room_ids" attrs="{'readonly':[('stages', 'in',['Complete'])]}">
+                                <form>
+                                    <header>
+                                        <field name="stages" widget="statusbar"/>
+                                    </header>
+                                    <group string="Check-in / Check-out">
+                                        <group>
+                                            <field name="check_in"/>
+                                        </group>
+                                        <group>
+                                            <field name="check_out"/>
+                                        </group>
+                                    </group>
+                                    <group string="Room Details">
+                                        <group>
+                                            <field name="room_id"
+                                                   attrs="{'readonly':[('stages','in',['Booked','Maintenance'])]}"/>
+                                            <field name="room_facilities"/>
+                                            <field name="capacity"/>
+                                            <field name="total_price"/>
+                                        </group>
+                                        <group>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="days"/>
+                                            <label for="price" class="mt-1" string="Charge"/>
+                                            <div name="price">
+                                                <field name="price" class="oe_inline"/>
+                                                Per Night
+                                            </div>
+                                        </group>
+                                    </group>
+                                    <group>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="check_in"/>
+                                    <field name="check_out"/>
+                                    <field name="days"/>
+                                    <field name="room_id" string="Room"/>
+                                    <field name="capacity"/>
+                                    <field name="room_facilities"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price"/>
+                                    <field name="total_price"/>
+                                    <field name="stages" widget="badge" decoration-success="stages=='Available'"
+                                           decoration-danger="stages=='Booked'"
+                                           decoration-info="stages=='Maintenance'"/>
+                                </tree>
+                            </field>
+
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="room_total_charges"/>
+                                    <field name="advance_amount" attrs="{'invisible': [('is_advance', '=', False)]}"
+                                           readonly="1"/>
+                                    <field name="total_night_invoice" invisible="1"/>
+                                    <field name="total_night_invoice_due" invisible="1"/>
+                                    <field name="total_amount" string="Total Payable Amount"/>
+                                    <field name="payable_due" widget="badge" string="Total Payable Due"
+                                           decoration-danger="payable_due"
+                                           attrs="{'invisible':[('payable_due','=', 0)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Proof Details" attrs="{'invisible': [('stages', 'in', ['Draft','Cancel'])]}">
+                            <field name="proof_ids">
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group string="Customer Details">
+                                                <field name="person_Id"/>
+                                            </group>
+                                            <group string="Document Details">
+                                                <field name="id_number"/>
+                                                <field name="id_name"/>
+                                                <field name="file_name" invisible="1"/>
+                                                <field name="document" filename="file_name" widget="binary"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <tree>
+                                    <field name="id_number"/>
+                                    <field name="id_name"/>
+                                    <field name="person_Id"/>
+                                    <field name="file_name" invisible="1"/>
+                                    <field name="document" filename="file_name" widget="binary"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Transport Services" attrs="{'invisible':[('stages','=','Cancel')]}">
+                            <field name="transport_ids">
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="transport_type" widget="radio"
+                                                       options="{'horizontal': true}"/>
+                                            </group>
+                                        </group>
+                                        <group string="Pickup / Drop Details">
+                                            <group>
+                                                <field name="time"/>
+                                                <field name="km"/>
+                                            </group>
+                                            <group>
+                                                <span class="o_form_label o_td_label" name="address_name">
+                                                    <b>Address</b>
+                                                </span>
+                                                <div class="o_address_format">
+                                                    <field name="location" placeholder="Location..."
+                                                           class="o_address_street"/>
+                                                    <field name="street" placeholder="Street..."
+                                                           class="o_address_street"/>
+                                                    <field name="street2" placeholder="Street 2..."
+                                                           class="o_address_street"/>
+                                                    <field name="city" placeholder="City"/>
+                                                </div>
+                                            </group>
+                                        </group>
+                                        <group string="Vehicle Details">
+                                            <group>
+                                                <field name="transport_mode_id"/>
+                                                <field name="currency_id" invisible="1"/>
+                                                <label for="charges" class="mt-1" string="Charge"/>
+                                                <div name="charge">
+                                                    <field name="charges" class="oe_inline"/>
+                                                    Per KM
+                                                </div>
+                                            </group>
+                                            <group>
+                                                <field name="driver_id"/>
+                                                <field name="total_charges" string="Total Charges"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <kanban>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click"
+                                                 style="width: 21rem; list-style:none;height:210px;">
+                                                <ul class="list-group list-group-flush" style="list-style:none;">
+                                                    <li>
+                                                        <b>Transport Type:</b>
+                                                        <field name="transport_type" widget="badge"
+                                                               decoration-success="transport_type=='Pickup'"
+                                                               decoration-info="transport_type=='Drop'"/>
+                                                    </li>
+                                                    <li>
+                                                        <b>Address:</b>
+                                                        <field name="location" placeholder="Location..."
+                                                               class="o_address_street"/>
+                                                        <field name="street" placeholder="Street..."
+                                                               class="o_address_street"/>
+                                                        ,
+                                                        <field name="street2" placeholder="Street 2..."
+                                                               class="o_address_street"/>
+                                                        ,
+                                                        <field name="city" placeholder="City"/>
+                                                    </li>
+                                                    <li>
+                                                        <b>Total KM :</b>
+                                                        <field name="km" widget="badge"/>
+                                                    </li>
+                                                    <li>
+                                                        <b>Date Time:</b>
+                                                        <field name="time"/>
+                                                    </li>
+                                                    <li>
+                                                        <b>Driver:</b>
+                                                        <field name="driver_id"/>
+                                                    </li>
+                                                    <li>
+                                                        <b>Vehicle:</b>
+                                                        <field name="transport_mode_id"/>
+                                                    </li>
+                                                    <li>
+                                                        <b>Charges:</b>
+                                                        <field name="currency_id" invisible="1"/>
+                                                        <field name="total_charges" widget="badge"/>
+                                                    </li>
+                                                </ul>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <field name="stage" invisible="1"/>
+                                                        <button name="action_complete" type="object"
+                                                                class="btn btn-outline-success" string="Complete"
+                                                                style="width: 70px; height: 20px; margin-top: 15px;padding:0px;"
+                                                                attrs="{'invisible':[('stage','!=','pending')]}">
+                                                            Complete
+                                                        </button>
+                                                        <button name="action_cancel" type="object"
+                                                                class="btn btn-outline-danger" string="Cancel"
+                                                                style="width: 70px; height: 20px; margin-top: 15px;padding:0px;margin-left:5px;"
+                                                                attrs="{'invisible':[('stage','!=','pending')]}">Cancel
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span class="float-right">
+                                                            <field name="stage" widget="label_selection"
+                                                                   options="{'classes': {'pending': 'info', 'complete': 'success','cancel': 'danger'}}"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="transport_total_charges"/>
+                                    <field name="total_amount" string="Total Payable Amount"/>
+                                    <field name="payable_due" widget="badge" string="Total Payable Due"
+                                           decoration-danger="payable_due"
+                                           attrs="{'invisible':[('payment_state','=','paid')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Laundry Services"
+                              attrs="{'invisible': [('stages', 'in', ['Draft','Confirm','Cancel'])]}">
+                            <field name="laundry_ids" context="{'booking_id':id}">
+                                <form>
+                                    <header>
+                                        <field name="stages" widget="statusbar"/>
+                                    </header>
+                                    <group>
+                                        <group>
+                                            <field name="room_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="responsible_id"/>
+                                        </group>
+                                    </group>
+                                    <group string="Laundry Details">
+                                        <group>
+                                            <field name="service_name_id" string="Service"/>
+                                            <field name="laundry_item_ids" widget="many2many_tags"/>
+                                            <field name="quantity"/>
+                                        </group>
+                                        <group>
+                                            <field name="create_date"
+                                                   attrs="{'invisible':[('deadline_date','=',False)]}"/>
+                                            <field name="deadline_date"/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <label for="charges" class="mt-1" string="Charge"/>
+                                            <div name="charges">
+                                                <field name="charges"/>
+                                                Per Quantity
+                                            </div>
+                                            <field name="total_charges"/>
+                                        </group>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="service_name_id"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="room_id"/>
+                                    <field name="responsible_id"/>
+                                    <field name="create_date"/>
+                                    <field name="deadline_date"/>
+                                    <field name="total_charges"/>
+                                    <field name="stages" widget="badge" decoration-success="stages=='Request'"
+                                           decoration-info="stages=='Completed'" string="Stage"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="laundry_total_charges"/>
+                                    <field name="total_amount" string="Total Payable Amount"/>
+                                    <field name="payable_due" widget="badge" string="Total Payable Due"
+                                           decoration-danger="payable_due"
+                                           attrs="{'invisible':[('payment_state','=','paid')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Restaurant Services"
+                              attrs="{'invisible': [('stages', 'in', ['Draft','Confirm','Cancel'])]}">
+                            <field name="restaurant_ids" context="{'booking_id':id}">
+                                <form>
+                                    <header>
+                                        <field name="stages" widget="statusbar"/>
+                                    </header>
+                                    <sheet>
+                                        <h1>
+                                            <field name="reservation_number"/>
+                                        </h1>
+                                        <group>
+                                            <group>
+                                                <field name="booking_id"/>
+                                                <field name="room_id" required="1"/>
+                                                <field name="create_date" string="Order Date"
+                                                       attrs="{'invisible':[('create_date','=',False)]}"/>
+                                            </group>
+                                            <group>
+                                                <label for="is_table_booking" class="mt-1"/>
+                                                <div name="is_table_booking">
+                                                    <field name="is_table_booking" class="oe_inline"/>
+                                                    <button name="action_book_table"
+                                                            type="object"
+                                                            string="Book Table"
+                                                            style="margin-left:10px;"
+                                                            attrs="{'invisible':['|',('is_table_booking','=',False),('table_stages','=','Booked')]}"/>
+                                                    <button name="action_free_table"
+                                                            type="object"
+                                                            string="Free"
+                                                            style="margin-left:10px;"
+                                                            attrs="{'invisible':['|',('is_table_booking','=',False),('table_stages','!=','Booked')]}"/>
+                                                </div>
+                                            </group>
+                                        </group>
+                                        <group>
+                                        </group>
+                                        <notebook>
+                                            <page string="Order List">
+                                                <field name="customer_foods_ids">
+                                                    <form>
+                                                        <header>
+                                                            <field name="stages" widget="statusbar"/>
+                                                        </header>
+                                                        <sheet>
+                                                            <group string="Food Details">
+                                                                <group>
+                                                                    <field name="food_included"/>
+                                                                    <field name="food_id"/>
+                                                                    <field name="currency_id" invisible="1"/>
+                                                                    <label for="price" class="mt-1" string="Price"
+                                                                           attrs="{'invisible':[('food_included','=',True)]}"/>
+                                                                    <div name="price"
+                                                                         attrs="{'invisible':[('food_included','=',True)]}">
+                                                                        <field name="price"
+                                                                               attrs="{'invisible':[('food_included','=',True)]}"/>
+                                                                        Per Quantity
+                                                                    </div>
+                                                                </group>
+                                                                <group>
+                                                                    <field name="quantity"
+                                                                           attrs="{'invisible':[('food_included','=',True)]}"/>
+                                                                    <field name="subtotal_amount"/>
+                                                                </group>
+                                                            </group>
+                                                        </sheet>
+                                                    </form>
+                                                    <tree>
+                                                        <field name="food_included"/>
+                                                        <field name="food_id" string="Foods"/>
+                                                        <field name="currency_id" invisible="1"/>
+                                                        <field name="price"/>
+                                                        <field name="quantity"/>
+                                                        <field name="subtotal_amount"/>
+                                                        <field name="stages" widget="badge"
+                                                               decoration-success="stages=='Confirm'"
+                                                               decoration-info="stages=='Prepared'" string="Stage"/>
+                                                    </tree>
+                                                </field>
+                                            </page>
+                                            <page string="Table Reservation"
+                                                  attrs="{'invisible':[('is_table_booking','=',False)]}">
+                                                <group>
+                                                    <group>
+                                                        <field name="res_start"
+                                                               attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                                    </group>
+                                                    <group>
+                                                        <field name="res_end"
+                                                               attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                                    </group>
+                                                </group>
+                                                <group string="Table Details">
+                                                    <group>
+                                                        <label for="table_id" class="mt-1"/>
+                                                        <div name="table_id"
+                                                             attrs="{'required':[('is_table_booking','=',True)]}">
+                                                            <field name="table_id" class="oe_inline" force_save="1"/>
+                                                            <field name="table_stages"
+                                                                   attrs="{'invisible':[('table_id','=',False)]}"
+                                                                   widget="badge" style="margin-left: 10px;"
+                                                                   decoration-success="table_stages=='Available'"
+                                                                   decoration-warning="table_stages=='Booked'"/>
+                                                        </div>
+                                                        <field name="table_capacity"/>
+                                                    </group>
+                                                    <group>
+                                                        <field name="no_of_person"
+                                                               attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                                        <field name="table_charges"
+                                                               attrs="{'required':[('is_table_booking','=',True)]}"/>
+                                                    </group>
+                                                </group>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                                <tree>
+                                    <field name="reservation_number"/>
+                                    <field name="room_id"/>
+                                    <field name="create_date" string="Order Date"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="total_charges"/>
+                                    <field name="stages" widget="badge" decoration-success="stages=='Confirm'"
+                                           decoration-info="stages=='Delivered'" string="Stage"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="restaurant_services_charges"/>
+                                    <field name="total_amount" string="Total Payable Amount"/>
+                                    <field name="payable_due" widget="badge" string="Total Payable Due"
+                                           decoration-danger="payable_due"
+                                           attrs="{'invisible':[('payment_state','=','paid')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                       <!--  <page string='Bar Services'>
+                            <field name="product_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="qty"/>
+                                    <field name="list_price"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="total_amount" string="Total Payable Amount"/>
+                                    <field name="payable_due" widget="badge" string="Total Payable Due"
+                                           decoration-danger="payable_due"
+                                           attrs="{'invisible':[('payment_state','=','paid')]}"/>
+                                </group>
+                            </group>
+                        </page> -->
+                        <page string="Amenities">
+                            <separator string="Amenities" />
+                            <field name="room_amenities_ids">
+                                <tree>
+                                    <field name="product_id"/>
+                                    <field name="amenities_categ_id"/>
+                                    <field name="price" />
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price"/>
+                                    <field name="total_amount" string="Total Payable Amount"/>
+                                    <field name="payable_due" widget="badge" string="Total Payable Due"
+                                           decoration-danger="payable_due"
+                                           attrs="{'invisible':[('payment_state','=','paid')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Agent">
+                            <group>
+                                <group>
+                                    <field name="is_any_agent" widget="boolean_toggle"/>
+                                    <field name="agent_id"
+                                           attrs="{'invisible':[('is_any_agent','=',False)],'required':[('is_any_agent','=',True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="agent_commission_type" widget="radio" options="{'horizontal':True}"
+                                           attrs="{'invisible':[('is_any_agent','=',False)],'required':[('is_any_agent','=',True)]}"/>
+                                    <field name="percentage"
+                                           attrs="{'invisible':['|',('agent_commission_type','!=','percentage'),('is_any_agent','=',False)],'required':[('agent_commission_type','=','percentage')]}"/>
+                                    <field name="agent_percentage_commission"
+                                           attrs="{'invisible':['|',('agent_commission_type','!=','percentage'),('is_any_agent','=',False)]}"/>
+                                    <field name="agent_commission"
+                                           attrs="{'invisible':['|',('agent_commission_type','!=','fix'),('is_any_agent','=',False)],'required':[('agent_commission_type','=','fix')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Extra Charges"
+                              attrs="{'invisible': [('stages', 'in', ['Draft','Cancel'])]}">
+                            <field name="service_ids">
+                                <tree editable="top">
+                                    <field name="service"/>
+                                    <field name="quantity"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="all_service_amount"/>
+                                    <field name="total_amount" string="Total Payable Amount"/>
+                                    <field name="payable_due" widget="badge" string="Total Payable Due"
+                                           decoration-danger="payable_due"
+                                           attrs="{'invisible':[('payment_state','=','paid')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Cancellation Charge" attrs="{'invisible': [('stages', '!=', 'Cancel')]}">
+                            <field name="cancels_invoice_id" invisible="1" force_save="1"/>
+                            <group>
+                                <group>
+                                    <field name="cancels_invoice_id"
+                                           attrs="{'invisible':[('cancels_invoice_id','=',False)]}" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="is_cancellation_charge" invisible="1"/>
+                                    <field name="cancellation_charge" readonly="1" forece_save="1"
+                                           attrs="{'invisible':[('is_cancellation_charge','=',False)]}"/>
+                                </group>
+                            </group>
+                            <group string="Cancellation Reason">
+                                <field name="cancellation_reason" nolabel="1" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Payment" name="payment">
+                            <field name="payment_ids"/>
+                        </page>
+                        <page string="Invoice">
+                            <field name="room_night_invoice_ids">
+                                <tree create="false">
+                                    <field name="room_id"/>
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="invoice_id" widget="many2one_button"/>
+                                    <field name="invoice_due"/>
+                                    <field name="payment_state" widget="badge"
+                                           decoration-success="payment_state=='paid'"
+                                           decoration-danger="payment_state=='not_paid'"
+                                           decoration-info="payment_state=='in_payment'"
+                                           decoration-primary="payment_state=='partial'"
+                                           decoration-warning="payment_state=='reversed'"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    
+    <record id="hotel_booking__calendar_view" model="ir.ui.view">
+        <field name="name">hotel.booking.calendar.view</field>
+        <field name="model">hotel.booking</field>
+        <field name="arch" type="xml">
+            <calendar date_start="create_date" mode="month" quick_add="False" hide_time="True" event_open_popup="True"
+                      color="booking_number">
+                <field name="booking_number"/>
+                <field name="customer_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="hotel_booking_search_view" model="ir.ui.view">
+        <field name="name">hotel.booking.search.view</field>
+        <field name="model">hotel.booking</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="booking_number"/>
+                <field name="customer_id"/>
+                <group string="Group By">
+                    <separator/>
+                    <filter name="create_date" string="Date " context="{'group_by':'create_date' }"/>
+                    <separator/>
+                    <filter name="responsible" string="Responsible" context="{'group_by':'responsible'}"/>
+                    <separator/>
+                    <filter string="Customer" name="customer" domain="[]"
+                            context="{'group_by':'customer_id'}"/>
+                </group>
+                <searchpanel>
+                    <field name="stages" string="Stages" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="hotel_booking_tree_view" model="ir.ui.view">
+        <field name="name">hotel.booking.tree.view</field>
+        <field name="model">hotel.booking</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="booking_number"/>
+                <field name="customer_id"/>
+                <field name='room_name'/>
+                <field name="create_date" string="Booking Date"/>
+                <field name="no_of_room"/>
+                <field name="responsible" widget="many2one_responsible"/>
+                <field name="stages" widget="badge" decoration-success="stages=='check_in'"
+                       decoration-primary="stages=='Confirm'" decoration-danger="stages=='Cancel'"
+                       decoration-info="stages=='Complete'" string="Stage"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hotel_booking_action" model="ir.actions.act_window">
+        <field name="name">Booking</field>
+        <field name="res_model">hotel.booking</field>
+        <field name="view_mode">tree,kanban,form,calendar,activity</field>
+    </record>
+
+    <record id="view_hotel_checkin_kanban" model="ir.ui.view">
+        <field name="name">hotel.checkin.kanban</field>
+        <field name="model">hotel.booking</field>
+        <field name="arch" type="xml">
+            <kanban class="o_room_no_kanban" sample="1">
+                <field name="stages" />
+                <field name="room_name" />
+                <templates>
+                    <t t-name="kanban-box" class="my_class">
+                        <div t-attf-class="p-0 oe_kanban_global_click o_room_kanban_#{record.stages.raw_value}">
+                            <div class="profile-card p-4 text-center">
+                                    <h4 style="color:#0d0c0d; white-space: nowrap; text-overflow: ellipsis; display: flex; justify-content: center;">
+                                        <strong>   
+                                            <field name="room_name"/>
+                                        </strong>
+                                    </h4>
+                                    <div t-if="record.stages.raw_value == 'Complete'">
+                                        <strong style="display: flex; justify-content: center;">Free</strong>
+                                    </div>
+                                    <div t-if="record.stages.raw_value == 'check_in'">
+                                        <strong style="display: flex; justify-content: center;">Booked</strong>
+                                    </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

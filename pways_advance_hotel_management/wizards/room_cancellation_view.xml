@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="room_cancellation_form_view" model="ir.ui.view">
+        <field name="name">room.cancellation.form.view</field>
+        <field name="model">room.cancellation</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="is_cancellation_charge"/>
+                        <field name="hall_cancel" invisible="1"/>
+                        <field name="hall_booking_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="booking_id" invisible="1"/>
+                        <field name="charge" attrs="{'required':[('is_cancellation_charge','=',True)],'invisible':[('is_cancellation_charge','=',False)]}"/>
+                    </group>
+                </group>
+                <group string="Cancellation Reason">
+                    <field name="cancellation_reason" required="1" nolabel="1"/>
+                </group>
+                <footer>
+                    <button string="Cancel Booking" name="action_room_cancellation" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="room_cancellation_action" model="ir.actions.act_window">
+        <field name="name">Room Cancellation</field>
+        <field name="res_model">room.cancellation</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

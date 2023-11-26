@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="booking_excel_report_form_view" model="ir.ui.view">
+        <field name="name">booking.excel.report.form.view</field>
+        <field name="model">booking.excel.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group string="Check In">
+                        <field name="check_in"/>
+                    </group>
+                    <group string="Check Out">
+                        <field name="check_out"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Print" name="booking_excel_report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="booking_excel_report_action" model="ir.actions.act_window">
+        <field name="name">Room Booking Statistic</field>
+        <field name="res_model">booking.excel.report</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="booking_excel_report_form_view"/>
+    </record>
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_customer_food_form_view" model="ir.ui.view">
+        <field name="name">hotel.customer.food.form.view</field>
+        <field name="model">customer.food.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="stages" widget="statusbar"/>
+                    <button string="Prepared" name="confirm_to_prepared" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['Confirm'])]}"/>
+                    <button string="Delivered" name="prepared_to_delivered" type="object"
+                            attrs="{'invisible': [('stages', 'not in', ['Prepared'])]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Customer ">
+                            <field name="booking_id" string="Booking Number" readonly="1"/>
+                            <field name="customer_id"/>
+                        </group>
+                    </group>
+                    <group string="Food Details">
+                        <group>
+                            <field name="food_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <label for="price" class="mt-1" string="Price"/>
+                            <div name="price">
+                                <field name="price"/>
+                                Per Quantity
+                            </div>
+                        </group>
+                        <group>
+                            <field name="quantity"/>
+                            <field name="subtotal_amount"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_food_order_search_view" model="ir.ui.view">
+        <field name="name">hotel.food.order.search.view</field>
+        <field name="model">customer.food.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="booking_id"/>
+                <field name="customer_id"/>
+                <field name="food_id"/>
+                <group string="Group By">
+                    <filter name="food_id" string="Food "
+                            context="{'group_by':'food_id' }"
+                    />
+                    <filter name="stages" string="Stage"
+                            context="{'group_by':'stages' }"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hotel_customer_food_order_tree_view" model="ir.ui.view">
+        <field name="name">hotel.customer.food.tree.view</field>
+        <field name="model">customer.food.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="booking_id" string="Booking Number"/>
+                <field name="customer_id"/>
+                <field name="food_id" string="Foods"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="price"/>
+                <field name="quantity"/>
+                <field name="subtotal_amount"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_customer_food_order_action" model="ir.actions.act_window">
+        <field name="name">Food Orders</field>
+        <field name="res_model">customer.food.order</field>
+        <field name="view_mode">tree,form,activity</field>
+    </record>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_transport_driver_form_view" model="ir.ui.view">
+        <field name="name">hotel.transport.driver.form.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="is_driver" />
+            </xpath>
+        </field>
+    </record>
+    <record id="hotel_transport_driver_action" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_driver','=',True)]</field>
+        <field name="context">{'default_is_driver':True}</field>
+    </record>
+
+    <record id="hotel_account_invoice_form_view" model="ir.ui.view">
+        <field name="name">hotel.account.invoice.form.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref='account.view_move_form'/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="reservation_id" />
+                <field name="booking_id" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

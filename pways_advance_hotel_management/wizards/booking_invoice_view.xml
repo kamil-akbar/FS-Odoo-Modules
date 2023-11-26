@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="booking_invoice_form_view" model="ir.ui.view">
+        <field name="name">booking.invoice.form.view</field>
+        <field name="model">hotel.booking.invoice</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="booking_id" invisible="1"/>
+                <field name="invoice_payment_type" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <div style="width: 100%;background-color: #dbe3e5;margin-bottom: 12px;text-align:center;font-size:16px;padding:3px;padding-left:10px;">
+                    <strong>Invoice Details</strong>
+                </div>
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:20%;">Charges for</th>
+                                <th scope="col" style="width:67%;">Description</th>
+                                <th scope="col" style="width:13%;">Total Charges</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr attrs="{'invisible':[('invoice_payment_type','=','by_night')]}">
+                                <td>Room</td>
+                                <td>
+                                    <field name="room_charges_desc"/>
+                                </td>
+                                <td>
+                                    <field name="room_total_charges" widget="monetary"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Transportation</td>
+                                <td>
+                                    <field name="transport_charges_desc"/>
+                                </td>
+                                <td>
+                                    <field name="transportation_charges" widget="monetary"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Laundry</td>
+                                <td>
+                                    <field name="laundry_charges_desc"/>
+                                </td>
+                                <td>
+                                    <field name="laundry_charges" widget="monetary"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Restaurant</td>
+                                <td>
+                                    <field name="restaurant_charges_desc"/>
+                                </td>
+                                <td>
+                                    <field name="restaurant_charges" widget="monetary"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bar Service</td>
+                                <td>
+                                    <field name="bar_charges_desc"/>
+                                </td>
+                                <td>
+                                    <field name="price_subtotal" widget="monetary"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Amenities Service</td>
+                                <td>
+                                    <field name="amiment_charges_desc"/>
+                                </td>
+                                <td>
+                                    <field name="price" widget="monetary"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Extra Service</td>
+                                <td>
+                                    <field name="extra_charges_desc"/>
+                                </td>
+                                <td>
+                                    <field name="extra_service_charges" widget="monetary"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Advance Amount</td>
+                                        <td>
+                                            <field name="advance_amount" widget="monetary"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agent Commission</td>
+                                        <td>
+                                            <field name="agent_commission" widget="monetary"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-success">Payable Amount</td>
+                                        <td class="table-success">
+                                            <field name="payable_amount" widget="monetary"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-success">Remaining Amount</td>
+                                        <td class="table-success">
+                                            <field name="remaining_amount" widget="monetary"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <footer>
+                    <button string="Pay" name="action_create_booking_invoice" type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="booking_invoice_action" model="ir.actions.act_window">
+        <field name="name">Booking Invoice</field>
+        <field name="res_model">hotel.booking.invoice</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

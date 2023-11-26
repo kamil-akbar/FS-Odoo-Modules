@@ -1,0 +1,155 @@
+<odoo>
+    <data noupdate="1">
+        <record id="room_booking_sequence" model="ir.sequence">
+            <field name="name">Room Booking</field>
+            <field name="code">rest.room.booking</field>
+            <field name="prefix">HR/%(year)s/%(month)s/%(day)s/B</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="laundry_sequence" model="ir.sequence">
+            <field name="name">Laundry Sequence</field>
+            <field name="code">rest.laundry.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HLS/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="restaurant_sequence" model="ir.sequence">
+            <field name="name">Restaurant Sequence</field>
+            <field name="code">rest.restaurant.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HRS/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="feast_booking_sequence" model="ir.sequence">
+            <field name="name">Feast Booking</field>
+            <field name="code">rest.feast.booking</field>
+            <field name="prefix">HB/%(year)s/%(month)s/%(day)s/B</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="transport_booking_sequence" model="ir.sequence">
+            <field name="name">transport Booking</field>
+            <field name="code">rest.transport.booking</field>
+            <field name="padding">5</field>
+            <field name="prefix">HTS/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="room_sequence" model="ir.sequence">
+            <field name="name">Room Sequence</field>
+            <field name="code">rest.room.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HR/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="housekeeping_sequence" model="ir.sequence">
+            <field name="name">Housekeeping Sequence</field>
+            <field name="code">rest.housekeeping.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HSK/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="proof_sequence" model="ir.sequence">
+            <field name="name">Booking Proof Sequence</field>
+            <field name="code">rest.proof.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">CP/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="floor_sequence" model="ir.sequence">
+            <field name="name">Floor Sequence</field>
+            <field name="code">rest.floor.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HF/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="vehicle_sequence" model="ir.sequence">
+            <field name="name">Vehicle Sequence</field>
+            <field name="code">rest.vehicle.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">VNO/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="table_sequence" model="ir.sequence">
+            <field name="name">Table Sequence</field>
+            <field name="code">rest.table.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HRT/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="table_reservation_sequence" model="ir.sequence">
+            <field name="name">Table Reservation Sequence</field>
+            <field name="code">rest.table.reservation</field>
+            <field name="padding">5</field>
+            <field name="prefix">TRS/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="food_sequence" model="ir.sequence">
+            <field name="name">Food Sequence</field>
+            <field name="code">rest.food.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HRF/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="food_order_sequence" model="ir.sequence">
+            <field name="name">Food Order Sequence</field>
+            <field name="code">rest.food.order</field>
+            <field name="padding">5</field>
+            <field name="prefix">FON/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="hall_sequence" model="ir.sequence">
+            <field name="name">Hall Sequence</field>
+            <field name="code">rest.hall.sequence</field>
+            <field name="padding">5</field>
+            <field name="prefix">HHN/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="reserv_sequence" model="ir.sequence">
+            <field name="name">Reservation Sequence</field>
+            <field name="code">hotel.restaurant.reservation</field>
+            <field name="padding">5</field>
+            <field name="prefix">HRR/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="order_sequence" model="ir.sequence">
+            <field name="name">Oerder Sequence</field>
+            <field name="code">hotel.reservation.order</field>
+            <field name="padding">5</field>
+            <field name="prefix">ORR/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="beer_sequence" model="ir.sequence">
+            <field name="name">Beer Sequence</field>
+            <field name="code">hotel.beer.type</field>
+            <field name="padding">5</field>
+            <field name="prefix">BRT/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="beer_bar_sequence" model="ir.sequence">
+            <field name="name">Beer Bar Sequence</field>
+            <field name="code">hotel.beer.bar</field>
+            <field name="padding">5</field>
+            <field name="prefix">BOR/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="tickets_sequence" model="ir.sequence">
+            <field name="name">Kitchen Tickets Sequence</field>
+            <field name="code">hotel.restaurant.kitchen.order.tickets</field>
+            <field name="padding">5</field>
+            <field name="prefix">KOT/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="booking_inquiry" model="ir.sequence">
+            <field name="name">Booking Inquiry</field>
+            <field name="code">booking.inquiry.seq</field>
+            <field name="padding">5</field>
+            <field name="prefix">BN/</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

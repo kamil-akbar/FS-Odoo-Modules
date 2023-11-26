@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_floor_form_view" model="ir.ui.view">
+        <field name="name">hotel.floor.form.view</field>
+        <field name="model">hotel.floor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="total_capacity_rooms_views" string="Rooms"
+                                icon="fa-users"
+                                style="background-color:LightGray;color:mediumpurple">
+                            <field name="capacity"/>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="floor_number_sequence"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="responsible_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_floor_tree_view" model="ir.ui.view">
+        <field name="name">hotel.floor.tree.view</field>
+        <field name="model">hotel.floor</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="floor_number_sequence" string="Floor Sequence "/>
+                <field name="name"/>
+                <field name="responsible_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_floor_action" model="ir.actions.act_window">
+        <field name="name">Floors</field>
+        <field name="res_model">hotel.floor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

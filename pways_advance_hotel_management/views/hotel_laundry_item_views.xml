@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_laundry_item_form_view" model="ir.ui.view">
+        <field name="name">hotel.laundry.item.form.view</field>
+        <field name="model">laundry.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                           <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_laundry_item_tree_view" model="ir.ui.view">
+        <field name="name">hotel.laundry.item.tree.view</field>
+        <field name="model">laundry.item</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_laundry_item_action" model="ir.actions.act_window">
+        <field name="name">Laundry Item</field>
+        <field name="res_model">laundry.item</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

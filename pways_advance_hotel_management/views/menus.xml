@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="main_menu_hotel" name="Hotel Management"/>
+    <!--Dashboard Menu-->
+    <menuitem id="menu_hotel_dashboard"
+              name="Dashboard"
+              sequence="0"
+              action="action_hotel_dashboard"
+              parent="main_menu_hotel"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+
+    <menuitem id="menu_hotel_attendance"
+              name="Attandances"
+              sequence="5"
+              parent="main_menu_hotel"
+              action="hr_attendance.hr_attendance_action_my_attendances" 
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_housekeeper,pways_advance_hotel_management.hotel_restaurant,pways_advance_hotel_management.hotel_laundry,pways_advance_hotel_management.hotel_transport,pways_advance_hotel_management.hotel_reception"/>
+
+    <!--Booking-->
+    <record id="room_website_order_confirm" model="ir.actions.act_window">
+      <field name="name">Room Website Booking</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('state', 'in', ['sent', 'draft']),('website_id', '!=', False)]</field>
+      <field name="context">{}</field>
+    </record>
+
+
+    <menuitem id="menu_hotel_booking"
+              name="Booking"
+              sequence="10"
+              parent="main_menu_hotel"
+              action="hotel_booking_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+
+    <menuitem name="Room Website Booking"
+              parent="menu_hotel_booking"
+              id="room_website_order_confirm_menu"
+              action="pways_advance_hotel_management.room_website_order_confirm"/>
+    
+    <menuitem id="menu_hotel_room_kanban_available"
+              name="Room Current Status"
+              sequence="3"
+              parent="menu_hotel_booking"
+              action="pways_advance_hotel_management.hotel_room_action"/>
+    
+    <menuitem id="menu_hotel_customer"
+              name="Customers"
+              sequence="5"
+              parent="menu_hotel_booking"
+              action="hotel_customer_booking_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+    
+    <menuitem id="menu_hotel_room_booking"
+              name="Bookings"
+              sequence="2"
+              parent="menu_hotel_booking"
+              action="hotel_booking_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>    
+
+    <menuitem id="menu_hotel_room_available"
+              name="Check Rooms Availablity"
+              sequence="1"
+              parent="menu_hotel_booking"
+              action="all_room_available_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+    
+
+    <menuitem id="menu_hotel_room"
+              name="Booking Details"
+              sequence="4"
+              parent="menu_hotel_booking"
+              action="hotel_room_details_action" groups="pways_advance_hotel_management.hotel_manager"/>
+    <menuitem id="products_details"
+              name="Products"
+              parent="menu_hotel_booking"
+              action="website_sale.product_template_action_website"/>
+ 
+<!-- Banquet -->
+
+    <menuitem id="menu_hotel_banquet_booking"
+              name="Venue"
+              sequence="20"
+              parent="main_menu_hotel"
+              action="hotel_feast_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+
+    <!-- Hall Configurations-->
+<!--     <menuitem id="menu_hotel_configuration_hall"
+              name="Hall Details"
+              sequence="2"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager"/> -->
+
+    <menuitem id="sub_menu_hotel_hall"
+              name="Venue Hall"
+              sequence="20"
+              parent="menu_hotel_banquet_booking"
+              action="hotel_hall_action" groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <menuitem id="menu_hotel_hall_booking"
+              name="Venue Booking "
+              sequence="10"
+              parent="menu_hotel_banquet_booking"
+              action="hotel_feast_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+
+
+    <!--Restaurant-->
+    <menuitem id="menu_hotel_restaurant"
+              name="Restaurant"
+              sequence="30"
+              parent="main_menu_hotel"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_restaurant,pways_advance_hotel_management.hotel_reception"/>
+    
+    <menuitem id="menu_hotel_restaurant_details"
+              name="Room Orders"
+              sequence="10"
+              parent="menu_hotel_restaurant"
+              action="hotel_restaurant_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_restaurant,pways_advance_hotel_management.hotel_reception"/>
+    
+   <!--  <menuitem id="sub_menu_hotel_beer_bar_item"
+              name="Bar Orders"
+              parent="menu_hotel_restaurant"
+              action="hotel_beer_bar_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_restaurant,pways_advance_hotel_management.hotel_reception"/> -->
+ 
+    <menuitem id="menu_open_view_hotel_restaurant_reservation_form_tree"
+              name="Table Booking"
+              action="open_view_hotel_restaurant_reservation_form_tree"
+              parent="menu_hotel_restaurant"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_restaurant,pways_advance_hotel_management.hotel_reception"/>
+
+    <menuitem id="menu_open_view_hotel_reservation_order_form_tree"
+              name="Table Orders"
+              parent="menu_hotel_restaurant"
+              action="open_view_hotel_reservation_order_form_tree"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_restaurant,pways_advance_hotel_management.hotel_reception"/>    
+
+    <menuitem id="menu_open_view_hotel_restaurant_kitchen_order_tickets_form_tree"
+              name="Kitchen Tickets"
+              parent="menu_hotel_restaurant"
+              action="open_view_hotel_restaurant_kitchen_order_tickets_form_tree"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_restaurant,pways_advance_hotel_management.hotel_reception"/>
+
+
+<!--     <menuitem id="menu_hotel_configuration_restaurant_details"
+              name="Restaurant Details"
+              sequence="4"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager"/> -->
+    <menuitem id="sub_menu_hotel_table_details"
+              name="Tables"
+              sequence="20"
+              parent="menu_hotel_restaurant"
+              action="hotel_restaurant_table_details_action" groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <!--Laundry-->
+    <menuitem id="hotel_laundry_service"
+              name="Services"
+              sequence="40"
+              parent="main_menu_hotel"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_laundry,pways_advance_hotel_management.hotel_reception,pways_advance_hotel_management.hotel_transport,pways_advance_hotel_management.hotel_housekeeper"/>
+    
+    <menuitem id="hotel_laundry_service_details"
+              name="Laundry Details"
+              sequence="1"
+              parent="hotel_laundry_service"
+              action="hotel_laundry_service_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_laundry,pways_advance_hotel_management.hotel_reception"/>
+
+    <menuitem id="menu_hotel_transport"
+              name="Transport Details"
+              sequence="2"
+              parent="hotel_laundry_service"
+              action="hotel_transport_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_transport,pways_advance_hotel_management.hotel_reception"/>
+    
+    <menuitem id="menu_hotel_housekeeping_details"
+              name="Housekeeping"
+              sequence="3"
+              parent="hotel_laundry_service"
+              action="hotel_housekeeping_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_housekeeper,pways_advance_hotel_management.hotel_reception"/>
+              
+    <!--Transport-->
+<!--     <menuitem id="menu_hotel_housekeeping"
+              name="Housekeeping"
+              parent="menu_hotel_configuration"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_housekeeper,pways_advance_hotel_management.hotel_reception"/> -->
+<!--     <menuitem id="hotel_transport_service"
+              name="Transport Service"
+              sequence="5"
+              parent="hotel_laundry_service"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_transport,pways_advance_hotel_management.hotel_reception"/> -->
+
+    <!--Staff-->
+    <menuitem id="menu_hotel_staff"
+              name="Staff"
+              sequence="60"
+              parent="main_menu_hotel"
+              groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="menu_hotel_agent"
+              name="Agents"
+              sequence="4"
+              parent="menu_hotel_staff"
+              action="hotel_agent_action"
+              groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_staff"
+              name="Hotel Staff"
+              sequence="3"
+              parent="menu_hotel_staff"
+              action="hotel_housekeeping_staff_action"
+              groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_transport_driver"
+              name="Drivers"
+              sequence="5"
+              parent="menu_hotel_staff"
+              action="hotel_transport_driver_action"
+              groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <menuitem id="sub_menu_hotel_atten"
+              name="Staff Attandance"
+              sequence="1"
+              parent="menu_hotel_staff"
+              action="hr_attendance.hr_attendance_action"
+              groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <menuitem id="sub_menu_hotel_leave"
+              name="Staff Leave"
+              sequence="2"
+              parent="menu_hotel_staff"
+              action="hr_holidays.hr_leave_action_my"
+              groups="pways_advance_hotel_management.hotel_manager"/>
+
+
+
+    <!--Booking Details Report-->
+    <!-- <menuitem id="menu_hotel_report"
+              name="Report"
+              parent="menu_hotel_configuration"
+              action="booking_excel_report_action"
+              groups="pways_advance_hotel_management.hotel_manager"/> -->
+    
+
+    <!-- report -->
+    <menuitem id="menu_hotel_report_view"
+              name="Reports"
+              sequence="85"
+              parent="main_menu_hotel" groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_all_report"
+              name="Booking Reports"
+              sequence="1"
+              parent="menu_hotel_report_view"
+              action="all_report_wizard_action" groups="pways_advance_hotel_management.hotel_manager"/>    
+
+    <menuitem id="sub_menu_invoice_report"
+              name="Hotel Analysis"
+              sequence="3"
+              parent="menu_hotel_report_view"
+              action="action_inherit_ivoice"/>
+
+    <menuitem id="sub_menu_ledger_report"
+              name="Hotel Ledger"
+              parent="menu_hotel_report_view"
+              action="action_inherit_ledger"/>
+
+
+    <!-- Configuration -->
+    <menuitem id="menu_hotel_configuration"
+              name="Configurations"
+              sequence="90"
+              parent="main_menu_hotel" groups="pways_advance_hotel_management.hotel_manager"/>
+    <menuitem id="terms_menu"
+              name="Terms And Condtions"
+              parent="menu_hotel_configuration"/>
+    <!-- Room Configuration -->
+    <menuitem id="menu_hotel_configuration_room_details"
+              name="Room Details"
+              sequence="1"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_room_details"
+              name="Rooms"
+              sequence="2"
+              parent="menu_hotel_configuration_room_details"
+              action="hotel_room_action" groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <menuitem id="sub_menu_hotel_room_available"
+              name="Check Available"
+              sequence="2"
+              parent="menu_hotel_configuration_room_details"
+              action="hotel_room_chek_action" groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_room_facilities"
+              name="Room Facilities"
+              sequence="3"
+              parent="menu_hotel_configuration_room_details"
+              action="hotel_room_facilities_action" groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_room_category"
+              name="Room Categories"
+              sequence="4"
+              parent="menu_hotel_configuration_room_details"
+              action="hotel_room_category_action" groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_room_type"
+              name="Room Types"
+              sequence="5"
+              parent="menu_hotel_configuration_room_details"
+              action="hotel_room_type_action" groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <menuitem id="sub_menu_hotel_floor"
+              name="Floors"
+              sequence="6"
+              parent="menu_hotel_configuration_room_details"
+              action="hotel_floor_action" groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <menuitem id="sub_menu_hotel_room_status"
+              name="Room Status"
+              sequence="7"
+              parent="menu_hotel_configuration_room_details"
+              action="hotel_room_status_action" groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <!-- Transport Configuration -->
+    <menuitem id="menu_hotel_configuration_transport_details"
+              name="Transport Details"
+              sequence="3"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager"/>
+    <menuitem id="sub_menu_hotel_transport_vehicle"
+              name="Vehicle "
+              sequence="1"
+              parent="menu_hotel_configuration_transport_details"
+              action="hotel_transport_vehicle_action" groups="pways_advance_hotel_management.hotel_manager"/>
+    <menuitem id="sub_menu_hotel_transport_type_vehicle"
+              name="Vehicle Types"
+              sequence="2"
+              parent="menu_hotel_configuration_transport_details"
+              action="hotel_transport_vehicle_type_action" groups="pways_advance_hotel_management.hotel_manager"/>
+
+    <!-- Laundry Configuration -->
+    <menuitem id="menu_hotel_configuration_Laundry_details"
+              name="Laundry Details"
+              sequence="5"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_laundry_service"
+              name="Laundry Service"
+              sequence="1"
+              parent="menu_hotel_configuration_Laundry_details"
+              action="hotel_laundry_service_type_action" groups="pways_advance_hotel_management.hotel_manager"/>
+    
+    <menuitem id="sub_menu_hotel_laundry_item"
+              name="Laundry Items"
+              sequence="2"
+              parent="menu_hotel_configuration_Laundry_details"
+              action="hotel_laundry_item_action" groups="pways_advance_hotel_management.hotel_manager"/>
+<!-- 
+    <menuitem id="sub_menu_hotel_amenity"
+              name="Amenity"
+              sequence="3"
+              parent="menu_hotel_configuration_Laundry_details"
+              action="action_hotel_room_amenities_type_view" groups="pways_advance_hotel_management.hotel_manager"/> -->
+    <menuitem id="menu_food"
+              name="Food Details"
+              sequence="70"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+
+    <menuitem id="hotel_image"
+              name="Hotel Image"
+              sequence="25"
+              parent="menu_hotel_configuration"/>
+    <menuitem id="sub_menu_hotel_food_item"
+              name="Food Items"
+              sequence="30"
+              parent="menu_food"
+              action="hotel_restaurant_food_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+
+    <menuitem id="sub_menu_hotel_food_category"
+              name="Food Categories"
+              sequence="40"
+              parent="menu_food"
+              action="hotel_restaurant_food_category_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+    
+   <!--  <menuitem id="sub_menu_hotel_beer_item"
+              name="Bar Items"
+              parent="menu_food"
+              action="hotel_beer_action"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/> -->
+
+    <menuitem id="menu_amenity"
+              name="Amenity"
+              sequence="80"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+
+    <menuitem id="menu_action_hotel_room_amenities_view_form"
+              name="Amenities"
+              action="action_hotel_room_amenities_view_form"
+              sequence="20"
+              parent="menu_amenity"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+    
+    <menuitem name="Amenity Types"
+              id="menu_action_hotel_room_amenities_type_view_form"
+              action="action_hotel_room_amenities_type_view"
+              sequence="30"
+              parent="menu_amenity"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>    
+    
+    <menuitem id="email_templates"
+              name="Email Templates"
+              sequence="90"
+              parent="menu_hotel_configuration" groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+    
+
+    <menuitem name="Email Templates"
+              id="menu_action_email_templates"
+              action="mail.action_email_template_tree_all"
+              sequence="30"
+              parent="email_templates"
+              groups="pways_advance_hotel_management.hotel_manager,pways_advance_hotel_management.hotel_reception"/>
+    
+</odoo>

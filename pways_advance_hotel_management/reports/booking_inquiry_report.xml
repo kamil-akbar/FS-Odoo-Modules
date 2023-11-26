@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="booking_inquiry_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2 class="text-center">Booking Inquiry Report</h2>
+                            <div id="data" style="font-size: 18px; margin-left:20px;">
+                                <table class="table table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Customer Name:</strong></td>
+                                            <td><span style="margin-left: 10px;" t-field="doc.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Email:</strong></td>
+                                            <td><span style="margin-left: 10px;" t-field="doc.email"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Phone:</strong></td>
+                                            <td><span style="margin-left: 10px;" t-field="doc.phone"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Booking Number:</strong></td>
+                                            <td><span style="margin-left: 10px;"  t-field="doc.booking_number"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Booking For:</strong></td>
+                                            <td><span style="margin-left: 10px;" t-field="doc.inquiry_for"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Booking State:</strong></td>
+                                            <td><span style="margin-left: 10px;"  t-field="doc.state"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Arrival Date:</strong></td>
+                                            <td><span style="margin-left: 10px;" t-field="doc.arrival_date"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong style="margin-left: 5px;">Departure Date:</strong></td>
+                                            <td><span style="margin-left: 20px;" t-field="doc.departure_date"/></td>
+                                        </tr>
+                                        <tr style="border-top:1px solid;">
+                                            <td><strong style="margin-left: 5px;">Services:</strong>
+                                                <span style="margin-left: 30px;">
+                                                    <strong>Laundry</strong>
+                                                </span>
+                                                <br></br>
+                                                <span style="margin-left: 109px;">
+                                                    <strong>Food</strong>
+                                                </span>
+                                                <br></br>
+                                                <span style="margin-left: 109px;">
+                                                    <strong>Transport</strong>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    <t t-if="doc.is_laundry">
+                                                        Included
+                                                    </t>
+                                                    <t t-else="">
+                                                        Not Included
+                                                    </t>
+                                                    <br/>
+                                                    <t t-if="doc.is_food_included">
+                                                        Included
+                                                    </t>
+                                                    <t t-else="">
+                                                        Not Included
+                                                    </t>
+                                                    <br/>
+                                                    <t t-if="doc.is_transport_included">
+                                                        Included
+                                                    </t>
+                                                    <t t-else="">
+                                                        Not Included
+                                                    </t>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><strong style="margin-left: 5px;">Note:</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><span style="margin-left: 20px;" t-field="doc.info"/></td>
+                                        </tr>
+                                    </tbody>    
+                                </table>
+                            </div>
+                            <div class="signature" style="margin-top: 150px;"> 
+                                <div style="float: left; margin-left: 13px;">
+                                    <hr style="margin-top: 10px;"/>
+                                    <p style="font-size: 24px;"><strong>Reception</strong></p>    
+                                </div>
+                                <div style="float: right;">
+                                    <hr style="margin-top: 10px;"/>
+                                    <p style="font-size: 24px;"><strong>Hotel Manager</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <record id="booking_inquiry_report_id" model="ir.actions.report">
+        <field name="name">Report</field>
+        <field name="model">booking.inquiry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_advance_hotel_management.booking_inquiry_report</field>
+        <field name="report_file">pways_advance_hotel_management.booking_inquiry_report</field>
+        <field name="print_report_name">'Booking Inquiry'</field>
+        <field name="binding_model_id" ref="model_booking_inquiry"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

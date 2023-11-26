@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_beer_form_view" model="ir.ui.view">
+        <field name="name">hotel.beer.form.view</field>
+        <field name="model">hotel.beer.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="description"/>
+                            <field name="list_price"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_beer_tree_view" model="ir.ui.view">
+        <field name="name">hotel.beer.tree.view</field>
+        <field name="model">hotel.beer.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Sequence Number"/>
+                <field name="product_id"/>
+                <field name="description"/>
+                <field name="list_price"/>
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_beer_action" model="ir.actions.act_window">
+        <field name="name">Bar Menu</field>
+        <field name="res_model">hotel.beer.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!-- beer bar -->
+
+    <record id="hotel_beer_bar_form_view" model="ir.ui.view">
+        <field name="name">hotel.beer.bar.form.view</field>
+        <field name="model">hotel.beer.bar</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,invoice,done,cancel"/>
+                        <button name="button_invoice" string="Create invoice" type="object" class="btn-primary" states="draft"/>
+                        <button name="button_done" string="Done" type="object" class="btn-primary" states="invoice"/>
+                        <button name="button_cancel" string="Cancel" type="object" class="btn-primary" states="draft,invoice"/> 
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div>
+
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="booking_id"/>
+                        </group>
+                        <group>
+                            <field name="customer_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string='Order Line'>
+                            <field name="product_line">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <!-- <field name="uom_id"/> -->
+                                    <field name="qty"/>
+                                    <field name="list_price"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" style="text-align: right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="price_subtotal"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hotel_beer_bar_tree_view" model="ir.ui.view">
+        <field name="name">hotel.beer.bar.tree.view</field>
+        <field name="model">hotel.beer.bar</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Sequence Number"/>
+                <field name="customer_id"/>
+                <field name="state"/>
+                <!-- <field name="field_name"/> -->
+            </tree>
+        </field>
+    </record>
+    <record id="hotel_beer_bar_action" model="ir.actions.act_window">
+        <field name="name">Bar Order</field>
+        <field name="res_model">hotel.beer.bar</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

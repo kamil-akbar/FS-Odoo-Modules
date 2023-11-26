@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hotel_night_invoice" model="ir.cron">
+            <field name="name">Hotel Management : Invoice Posted every Night</field>
+            <field name="model_id" ref="model_hotel_room_details"/>
+            <field name="state" eval="'code'"/>
+            <field name="code" eval="'model.hotel_room_night_invoice()'"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">1</field>
+            <field name="active" eval="True"/>
+            <field name="doall" eval="True"/>
+        </record>
+    </data>
+</odoo>

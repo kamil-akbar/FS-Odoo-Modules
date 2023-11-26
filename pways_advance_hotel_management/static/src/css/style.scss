@@ -1,0 +1,285 @@
+.o_action_manager {
+    overflow: auto !important;
+}
+.property_dashboard {
+    background-color: #f5f5f7 !important;
+    height: 100%;
+    .d-flex {
+        display: flex;
+    }
+
+    .just-end {
+        justify-content: flex-end;
+    }
+
+    .tk-form-control {
+        border-radius: 1px !important;
+        border: none !important;
+        background-color: #eef3f7;
+        border-color: #F5F8FA;
+        color: #5E6278;
+        transition: color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .tk-btn-prime {
+        border-radius: 1px !important;
+    }
+
+    .me-2 {
+        margin-right: .5rem !important;
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        margin: 0px -1px -1px 0px;
+        background-clip: border-rounded;
+        border-radius: 25px;
+        border: 2px;
+        box-shadow: 0 0 20px 0 rgba(76, 87, 125, .02);
+
+    }
+    .card.card-xl-stretch.mb-xl-8:hover {
+        transform: translateY(-5px) scale(1.005) translateZ(0);
+        box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px transparent;
+        cursor: pointer;
+    }
+    .card-body {
+        flex: 1 1 auto;
+        border-radius: 25px;
+        padding: 1rem 1rem;
+    }
+
+    .card-p {
+        padding: 1rem 1.25rem !important;
+        border-radius: 25px !important;
+        background-color: #f5e5e1 !important
+    }
+
+    .flex-stack {
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .flex-grow-1 {
+        flex-grow: 1 !important;
+    }
+
+    .d-flex {
+        display: flex !important;
+    }
+
+    .symbol {
+        display: inline-block;
+        flex-shrink: 0;
+        position: relative;
+        border-radius: .475rem;
+    }
+
+    .symbol .symbol-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        color: #3f4254;
+        background-color: #f5f8fa;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        border-radius: .475rem;
+        width: 50px;
+        height: 50px;
+    }
+
+    .svg-icon.svg-icon-info svg [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #009ef7;
+    }
+
+    .svg-icon.svg-icon-warning svg [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #ffc700;
+    }
+
+    .svg-icon.svg-icon-success svg [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #50cd89;
+    }
+
+    .svg-icon.svg-icon-danger svg [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #f1416c;
+    }
+    .svg-icon.svg-icon-general svg [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #7239ea;
+    }
+    .svg-icon.svg-icon-progress svg [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #ff9800;
+    }
+
+    .bg-light-info {
+        background-color: #f1faff !important;
+    }
+
+    .bg-light-success {
+        background-color: #e8fff3 !important;
+    }
+
+    .bg-light-warning {
+        background-color: #fff8dd !important;
+    }
+
+    .bg-light-danger {
+        background-color: #fff5f8 !important;
+    }
+    .bg-light-progress {
+        background-color: #fff0ce !important;
+    }
+
+    .bg-light-ship {
+        background-color: #f8f5ff!important;
+    }
+    .text-end {
+        text-align: right !important;
+    }
+
+    .text-dark {
+        color: #181c32 !important;
+    }
+
+    .fw-bolder {
+        font-weight: 600 !important;
+    }
+
+    .text-muted {
+        color: #a1a5b7 !important;
+        font-weight: 700;
+    }
+
+    .btn.btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .btn-sm, .btn-group-sm > .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.94791667rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+        background-color: #f5f8fa;
+    }
+
+    .svg-icon.svg-icon-3 svg {
+        height: 2rem !important;
+        width: 2rem !important;
+        padding: 0.35rem;
+
+
+    }
+
+    .svg-icon svg [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #a1a5b7;
+
+        &:hover{
+            fill: #009ef7;
+        }
+    }
+    .svg-icon svg:hover [fill]:not(.permanent):not(g) {
+        transition: fill .3s ease;
+        fill: #009ef7;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.5em 0.85em;
+        font-size: .85rem;
+        font-weight: 600;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.475rem;
+        border: none !important;
+    }
+    .badge-light-success {
+        color: #50cd89;
+        background-color: #e8fff3;
+    }
+    .badge-light-danger {
+        color: #f1416c;
+        background-color: #fff5f8;
+    }
+    .badge-light-info {
+        color: #009ef7;
+        background-color: #f1faff;
+    }
+    .badge-light-warning {
+        color: #ffc700;
+        background-color: #fff8dd;
+    }
+    .badge-light-primary {
+        color: #7239ea;
+        background-color: #f8f5ff;
+    }
+    .fw-bolder-7 {
+        font-weight: 700!important;
+    }
+    div.dataTables_wrapper div.dataTables_filter input:focus-visible{
+        outline: none !important;
+    }
+    div.dataTables_wrapper div.dataTables_filter input{
+        border: 1px solid gray !important;
+    }
+    .paginate_button{
+        margin-right: 10px !important;
+    }
+}
+.o_room_kanban_check_in div.profile-card{
+    background-color: #f50b00 !important;
+}
+.o_room_kanban_Complete div.profile-card{
+    background-color: #02fa38 !important;
+}
+.o_room_kanban_Booked div.profile-card{
+    background-color: #f50b00 !important;
+}
+.o_room_kanban_Available div.profile-card{
+    background-color: #02fa38 !important;
+}
+.o_room_no_kanban div.o_kanban_record {
+    width:152px !important;
+}
+.o_room_kanban_Draft div.profile-card,
+.o_room_kanban_Confirm div.profile-card,
+.o_room_kanban_Cancel div.profile-card{
+    background-color: #FFFFFF !important;
+}
+.room-detail{
+    display: flex;
+}
+.room-card{
+    height: 100%;
+    width: 25%;
+}
+.o_hotel_room_kanban_Booked{
+    background-color: #f50b00 !important;
+}
+.o_hotel_room_kanban_Available{
+    background-color: #31a330 !important;
+}
+.o_hotel_room_kanban_Maintenance{
+    background-color: #e9ce0a !important;
+}
+.room_no{
+    color: #FFFFFF !important;
+}
+

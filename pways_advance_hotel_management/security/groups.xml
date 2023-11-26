@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="module_hotel_management" model="ir.module.category">
+            <field name="name">Advance Hotel Management</field>
+            <field name="description">Access rights for Advance Hotel Management</field>
+        </record>
+        <record id="hotel_manager" model="res.groups">
+            <field name="name">Hotel Manager</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_hotel_management"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+        <record id="hotel_housekeeper" model="res.groups">
+            <field name="name">Room Service</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_hotel_management"/>
+        </record>
+        <record id="hotel_restaurant" model="res.groups">
+            <field name="name">Restaurant-Kitchen</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_hotel_management"/>
+        </record>
+        <record id="hotel_laundry" model="res.groups">
+            <field name="name">Laundry</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_hotel_management"/>
+        </record>
+        <record id="hotel_transport" model="res.groups">
+            <field name="name">Transport</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_hotel_management"/>
+        </record>
+        <record id="hotel_reception" model="res.groups">
+            <field name="name">Reception</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_hotel_management"/>
+        </record>
+        <record id="base.default_user" model="res.users">
+            <field name="groups_id" eval="[(4, ref('hotel_manager'))]"/>
+        </record>
+    </data>
+</odoo>
