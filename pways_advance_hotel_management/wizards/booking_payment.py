@@ -18,7 +18,7 @@ class BookingAdvancePayment(models.TransientModel):
         payment_method_id = payment_methods and payment_methods[0] or False
         payment_object = self.env['account.payment']
         vals = {
-                'journal_id' : self.payment_method,
+                'journal_id' : self.payment_method.id,
                 'amount' : self.amount,
                 'currency_id' : self.currency_id.id,
                 'payment_type': 'inbound',
@@ -28,7 +28,7 @@ class BookingAdvancePayment(models.TransientModel):
                 'ref': self.ref
             }
         new_advance_amount = booking_id.advance_amount + self.amount
-        booking_id.write({'is_advance': True, 'journal_id': self.payment_method, 'advance_amount': new_advance_amount})
+        booking_id.write({'is_advance': True, 'journal_id': self.payment_method.id, 'advance_amount': new_advance_amount})
         payment_id = payment_object.create(vals)
         payment_id.action_post()
         return True
