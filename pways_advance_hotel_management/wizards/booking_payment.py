@@ -14,6 +14,8 @@ class BookingAdvancePayment(models.TransientModel):
         if not self.payment_method:
             raise UserError("Please select payment method")
         booking_id = self.env['hotel.booking'].browse(self.env.context.get('active_id'))
+        partner_id = booking_id.customer_id.id  # Get the partner (customer) associated with the booking
+
         payment_methods = self.payment_method.inbound_payment_method_line_ids
         payment_method_id = payment_methods and payment_methods[0] or False
         payment_object = self.env['account.payment']
@@ -23,6 +25,7 @@ class BookingAdvancePayment(models.TransientModel):
                 'currency_id' : self.currency_id.id,
                 'payment_type': 'inbound',
                 'partner_type': 'customer',
+                'partner_id': partner_id,  # Link the payment to the customer
                 'booking_id' : booking_id and booking_id.id,
                 'inquiry_id': False,
                 'ref': self.ref
