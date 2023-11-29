@@ -93,7 +93,7 @@
                         <t t-foreach="hotel_book.room_ids" t-as="booking">
                             <tr>
                                 <td><t t-out="booking.check_in.strftime('%Y-%m-%d 02:00 PM')"/></td>
-                                <td><t t-out="booking.check_out.strftime('%Y-%m-%d 12:00 PM')"/></td>
+                                <td><t t-out="booking.check_out.strftime('%Y-%m-%d 11:00 AM')"/></td>
                                 <!-- <td><span t-field="booking.room_id"/></td> -->
                                 <td><span t-field="booking.capacity"/></td>
                                 <td><span t-field="booking.days"/></td>  

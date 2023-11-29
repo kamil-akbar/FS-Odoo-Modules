@@ -559,7 +559,7 @@
                                     </tr>
                                     <tr>
                                         <td><span t-esc="line.checkin_date.strftime('%Y-%m-%d 02:00 PM')"/></td>
-                                        <td><span t-esc="line.checkout_date.strftime('%Y-%m-%d 11:00 PM')"/></td>
+                                        <td><span t-esc="line.checkout_date.strftime('%Y-%m-%d 11:00 AM')"/></td>
                                         <td><span t-esc="line.number_of_days"/></td>
                                     </tr>
                                     <tr>

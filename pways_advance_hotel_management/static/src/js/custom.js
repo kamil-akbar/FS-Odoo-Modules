@@ -22,6 +22,10 @@ odoo.define('pways_advance_hotel_management.custom', function (require) {
 
     if (checkinInput && checkoutInput) {
         var today = new Date();
+        var targetDate = new Date('2023-12-11');
+        if (today < targetDate) {
+            today = targetDate;
+        }
         var tomorrow = new Date();
         tomorrow.setDate(today.getDate() + 1);
         var formattedToday = today.toISOString().slice(0, 10);
@@ -62,6 +66,29 @@ odoo.define('pways_advance_hotel_management.custom', function (require) {
         } else {
             console.log("Invalid date input");
         }
+
+        var quantity = parseInt($('.quantity').val());
+        var productId = parseInt($('input[name="product_id"]').val());
+        var today = new Date();
+        var targetDate = new Date('2023-12-11');
+        if (today < targetDate) {
+            today = targetDate;
+        }
+        var arrivalDate = new Date(arrival.val());
+        var departureDate = new Date(departure.val());
+        rpc.query({
+            route: '/refrence2/product/',
+            params: { product: productId },
+        }).then(function (result) {
+            if (result < quantity || arrivalDate < today || departureDate < today ) {
+                $('.js_check_product').prop('disabled', true);
+                $('.js_check_product').addClass('disabled_cart').css('background-color', '#D8D8D8'); 
+            } else {
+                $('.js_check_product').prop('disabled', false);  
+                $('.js_check_product').removeClass('disabled_cart');
+                $('.js_check_product').css('background-color', ''); 
+            }
+        });
     });
 
 
@@ -70,6 +97,10 @@ odoo.define('pways_advance_hotel_management.custom', function (require) {
 
     if (arrivalDateInput && departureDateInput) {
         var today = new Date();
+        var targetDate = new Date('2023-12-11');
+        if (today < targetDate) {
+            today = targetDate;
+        }
         var tomorrow = new Date();
         tomorrow.setDate(today.getDate() + 1);
         var formattedToday = today.toISOString().slice(0, 10);
@@ -81,11 +112,18 @@ odoo.define('pways_advance_hotel_management.custom', function (require) {
     $('.quantity').on('change', function(){
         var quantity = parseInt($('.quantity').val());
         var productId = parseInt($('input[name="product_id"]').val());
+        var today = new Date();
+        var targetDate = new Date('2023-12-11');
+        if (today < targetDate) {
+            today = targetDate;
+        }
+        var arrivalDate = new Date(arrival.val());
+        var departureDate = new Date(departure.val());
         rpc.query({
             route: '/refrence2/product/',
             params: { product: productId },
         }).then(function (result) {
-            if (result < quantity) {             
+            if (result < quantity || arrivalDate < today || departureDate < today ) {
                 $('.js_check_product').prop('disabled', true);
                 $('.js_check_product').addClass('disabled_cart').css('background-color', '#D8D8D8'); 
             } else {
