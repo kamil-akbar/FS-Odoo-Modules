@@ -14,6 +14,8 @@ class BookingAdvancePayment(models.TransientModel):
         if not self.payment_method:
             raise UserError("Please select payment method")
         booking_id = self.env['hotel.booking'].browse(self.env.context.get('active_id'))
+        if not booking_id.is_advance:
+            booking_id.advance_amount = 0.00
         partner_id = booking_id.customer_id.id  # Get the partner (customer) associated with the booking
 
         payment_methods = self.payment_method.inbound_payment_method_line_ids
