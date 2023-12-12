@@ -158,15 +158,15 @@ class HotelBookingInvoice(models.TransientModel):
             group_internal_user = self.env['res.groups'].sudo().browse(internal_user_id)
             super_user = group_internal_user.users[0]
 
-        if self.booking_id.is_advance:
-            deposit = {
-                'payment_type': 'inbound',
-                'partner_id': self.booking_id.customer_id.id,
-                'amount': self.advance_amount,
-                'journal_id': self.booking_id.journal_id.id
-            }
-            payment_id = self.env['account.payment'].create(deposit)
-            payment_id.action_post()
+        # if self.booking_id.is_advance:
+        #     deposit = {
+        #         'payment_type': 'inbound',
+        #         'partner_id': self.booking_id.customer_id.id,
+        #         'amount': self.advance_amount,
+        #         'journal_id': self.booking_id.journal_id.id
+        #     }
+        #     payment_id = self.env['account.payment'].create(deposit)
+        #     payment_id.action_post()
         self.booking_id.confirm_to_done()
         invoice_lines = []
         if self.booking_id.invoice_payment_type == 'once':
