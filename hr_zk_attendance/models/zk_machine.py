@@ -68,7 +68,7 @@ class ZkMachine(models.Model):
                 zk_port = info.port_no
                 timeout = 30
                 try:
-                    zk = ZK(machine_ip, port=zk_port, timeout=timeout, password=0, force_udp=False, ommit_ping=False)
+                    zk = ZK(machine_ip, port=zk_port, timeout=timeout, password=0, force_udp=False, ommit_ping=True)
                 except NameError:
                     raise UserError(_("Please install it with 'pip3 install pyzk'."))
                 conn = self.device_connect(zk)
